@@ -18,7 +18,7 @@ export function Faq() {
         <div className="head head--c"><h2 className="t t-1" id="faq-h"><TitleText title={FAQ.title} /></h2></div>
         <Accordion items={FAQ.items} />
         <div className="faq__cta">
-          <Cta tone="r" source="faq" />
+          <Cta tone="r" />
           <a className="call" href={SITE.phone.tel}><Icon name="phone" /><u>{SITE.phone.display}</u></a>
         </div>
       </div>

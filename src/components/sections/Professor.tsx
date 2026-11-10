@@ -44,7 +44,7 @@ export function Professor() {
             </div>
             <div className="pf__r">
               <p className="pf__body">{PROFESSOR.body.map((l, i) => <span key={i}>{l}{i < PROFESSOR.body.length - 1 ? ' ' : ''}</span>)}</p>
-              <Cta tone="r" size="sm" source="professor" />
+              <Cta tone="r" size="sm" />
             </div>
           </div>
           <div className="pf__stage">

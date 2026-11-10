@@ -3,8 +3,7 @@ import { FOOTER } from '../../data/footer'
 import { SITE } from '../../data/site'
 import { useNextClass } from '../../hooks/useNextClass'
 import { scrollToTarget } from '../../lib/lenis'
-import { track } from '../../lib/track'
-import { useBooking } from '../../booking/BookingContext'
+import { useBooking } from '../../nd'
 import { Icon } from '../ui/Icon'
 import { clamp01, easeInOut, easeTear, FLAPS, flapOpen, flapPoly, grainDataUrl, introYs, makeTear, morphYs, polyD, sheetD, START, XS, type Tear } from './tear'
 
@@ -133,7 +132,6 @@ export function PushpinTearFooter() {
     // pull the pin: it lifts, the sheet re-rips a new edge, the pin stabs back
     pullRef.current = () => {
       if (s.busy || s.mode === 'wait') return
-      track.pin()
       const swap = () => { s.seed += 1; s.prev = s.tear; s.from = s.ys.length ? s.ys : s.tear.ys; s.tear = makeTear(s.seed) }
       if (RM) { swap(); s.prev = null; s.mode = 'rest'; kick(); return }
       s.busy = true; setPin('lift')
@@ -196,7 +194,7 @@ export function PushpinTearFooter() {
 
       <div className="tpf-z tpf-news tpf-h" style={{ ['--i' as string]: 3 }}>
         <span>{FOOTER.news}</span>
-        <button type="button" className="tpf-pill" onClick={() => { track.cta('footer'); open({ source: 'footer' }) }}>
+        <button type="button" className="tpf-pill" onClick={() => open()}>
           <span>{FOOTER.pill}</span><span className="tpf-knob" aria-hidden="true"><Icon name="arrow" className="tpf-ico" /></span>
         </button>
       </div>
@@ -207,7 +205,7 @@ export function PushpinTearFooter() {
       <nav className="tpf-z tpf-col tpf-h l" style={{ ['--i' as string]: 6 }} aria-label={FOOTER.colPrograms.label}>
         <h3>{FOOTER.colPrograms.title}<Icon name="wave" className="tpf-ico" /></h3>
         <ul>{FOOTER.colPrograms.links.map((l) => <li key={l}><a href="#programs">{l}</a></li>)}</ul>
-        <button type="button" className="tpf-big" onClick={() => { track.cta('footer_col'); open({ source: 'footer_col' }) }}>{FOOTER.colPrograms.big}</button>
+        <button type="button" className="tpf-big" onClick={() => open()}>{FOOTER.colPrograms.big}</button>
       </nav>
       <nav className="tpf-z tpf-col tpf-h r" style={{ ['--i' as string]: 7 }} aria-label={FOOTER.colSchool.label}>
         <h3>{FOOTER.colSchool.title}<Icon name="wave" className="tpf-ico" /></h3>

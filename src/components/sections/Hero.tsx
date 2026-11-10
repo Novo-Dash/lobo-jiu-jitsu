@@ -36,7 +36,7 @@ export function Hero() {
         <div className="hero__in">
           <h1 className="t t-hero" id="h1"><TitleText title={HERO.title} /></h1>
           <p className="hero__sub"><Rich text={HERO.sub} /></p>
-          <Cta tone="r" source="hero" id="heroCta" className="hero__cta" />
+          <Cta tone="r" id="heroCta" className="hero__cta" />
         </div>
       </div>
     </section>

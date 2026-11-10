@@ -101,7 +101,7 @@ export function Adults() {
               </li>
             ))}
           </ol>
-          <div className="dq__end"><Cta tone="r" source="adults" who="adult" /></div>
+          <div className="dq__end"><Cta tone="r" who="adult" /></div>
         </div>
       </div>
     </section>

@@ -98,25 +98,6 @@
 .tpf .tpf-big{justify-self:inherit;text-align:inherit}
 .tpf-col.l .tpf-big{justify-self:start}.tpf-col.r .tpf-big{justify-self:end}
 
-/* booking sheet on Base UI Dialog: backdrop + viewport + popup */
-.modal-bd{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.66);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:opacity .3s ease}
-.modal-bd[data-starting-style],.modal-bd[data-ending-style]{opacity:0}
-.modal{position:fixed;inset:0;z-index:81;display:grid;place-items:end center;background:none;backdrop-filter:none}
-@media (min-width:700px){.modal{place-items:center;padding:20px}}
-.sheet{transition:transform .5s cubic-bezier(.33,1,.68,1),opacity .4s ease}
-.sheet[data-starting-style],.sheet[data-ending-style]{transform:translateY(40px);opacity:0}
-.sh__av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--y);color:var(--k)}
-.sh__av svg{width:24px}
-.sh__x svg{width:16px;height:16px}
-.sh__body .t{margin:0 0 8px}
-.sh__body form > p:not(.err){margin:0 0 18px;color:var(--mute);font-size:15px}
-.fld__l{font-size:13px;font-weight:600;color:var(--mute)}
-.fld .err{margin-top:2px}
-.fld input[aria-invalid="true"]{border-color:var(--color-error)}
-.sh__nav .cta[disabled]{opacity:.7;cursor:progress}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.sh__done > p{margin:0;max-width:36ch;color:var(--mute)}
-.sh__done .cta{margin-top:10px}
 
 
 /* glass fallback (PRD 13) */
@@ -271,13 +252,12 @@
 .cta--r:hover{background:color-mix(in srgb,var(--color-belt-red) 88%,var(--color-white))}
 .cta--r .cta__w{background:color-mix(in srgb,var(--color-belt-red) 72%,var(--color-black));color:var(--color-white);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 /* Every booking button calls for the click: a ring that pulses out of it and a sheen that crosses
-   it now and then. Not inside the booking dialog; off under reduced motion */
+   it now and then; off under reduced motion */
 .cta{--pulse:var(--y);--shine:rgba(255,255,255,.55);background-image:linear-gradient(110deg,transparent 38%,var(--shine) 50%,transparent 62%);background-size:300% 100%;background-repeat:no-repeat;background-position:130% 0;animation:cta-shine 5.2s ease-in-out 1.2s infinite}
 .cta--k{--pulse:var(--k);--shine:rgba(255,255,255,.16)}
 .cta--r{--pulse:var(--color-belt-red);--shine:rgba(255,255,255,.28)}
 .cta::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:cta-pulse 2.6s cubic-bezier(.2,.6,.3,1) infinite}
-.cta:hover::after,.cta:focus-visible::after,.sh__nav .cta::after{animation:none}
-.sh__nav .cta{animation:none;background-image:none}
+.cta:hover::after,.cta:focus-visible::after{animation:none}
 @keyframes cta-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--pulse) 55%,transparent)}75%,100%{box-shadow:0 0 0 16px color-mix(in srgb,var(--pulse) 0%,transparent)}}
 @keyframes cta-shine{0%{background-position:130% 0}22%,100%{background-position:-30% 0}}
 .still .cta,.still .cta::after{animation:none}
@@ -564,3 +544,29 @@
 @media (max-width:899px) and (max-height:760px){.tpf-col ul{display:none}.tpf-col h3{margin-bottom:0}}
 @media (max-width:899px){#programs{overflow-x:clip}}
 @media (max-width:1023px){.tpf .tpf-mail{min-width:46px;min-height:46px}}
+/* The Novo Dash kit's booking form (src/nd) in the page's identity: the red of the booking buttons
+   with white letters, the ink panel, Inter for text and Saira for the condensed uppercase titles */
+.nd{
+  --nd-accent:var(--color-belt-red);
+  --nd-accent-ink:var(--color-white);
+  --nd-panel:var(--color-ink);
+  --nd-font:var(--f-b);
+  --nd-font-display:var(--f-d);
+  --nd-display-case:uppercase;
+  --nd-display-weight:900;
+  --nd-button-radius:999px;
+}
+/* hero on phones: the button is always on the first screen (Adryan, 10/11). The photo band takes what
+   the text leaves; on short phones the photo and the type shrink, the order stays */
+@media (max-width:899px){
+  .hero__media{height:clamp(150px,calc(100svh - 500px),400px)}
+  .hero__in .t-hero{font-size:clamp(34px,10vw,46px)}
+  .hero__sub{margin:14px 0 20px;font-size:16px;line-height:1.5}
+  .hero__in{padding-bottom:20px}
+}
+@media (max-width:899px) and (max-height:740px){
+  .hero__in .t-hero{font-size:clamp(28px,8.4vw,38px)}
+  .hero__sub{margin:12px 0 16px;font-size:14.5px;line-height:1.45}
+  .hero__in{padding-bottom:16px}
+  .hero__media{height:clamp(110px,calc(100svh - 430px),300px)}
+}

@@ -8,13 +8,11 @@ import { createServer } from 'vite'
 const confirmed = process.env.VITE_SITE_URL?.replace(/\/$/, '')
 const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:4173'
 
-// Local /api: the same Vercel handlers (api/*.ts), so the booking can be tested end to end.
-// Without LEAD_WEBHOOK_URL the lead is only logged in the terminal (LEAD_WEBHOOK_URL=log).
+// Local /api: the kit's CAPI handler (api/capi.ts) answers in dev and preview as on Vercel.
 type Load = (url: string) => Promise<Record<string, unknown>>
 const apiMiddleware = (load: Load): Connect.NextHandleFunction => async (req, res, next) => {
-  const m = req.url?.match(/^\/api\/(lead|capi)(\?.*)?$/)
+  const m = req.url?.match(/^\/api\/(capi)(\?.*)?$/)
   if (!m) return next()
-  process.env.LEAD_WEBHOOK_URL ??= 'log'
   let raw = ''
   for await (const chunk of req) raw += chunk
   const mod = await load(`/api/${m[1]}.ts`)

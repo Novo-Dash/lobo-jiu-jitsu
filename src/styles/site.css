@@ -482,40 +482,6 @@ a{color:inherit}
 
 /* phones: the call stays in reach */
 
-/* booking sheet */
-.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:end center;background:rgba(0,0,0,.66);backdrop-filter:blur(4px)}
-@media (min-width:700px){.modal{place-items:center;padding:20px}}
-.sheet{width:min(540px,100%);max-height:94vh;max-height:94svh;overflow:auto;background:var(--off);color:var(--k);border-radius:26px 26px 0 0}
-@media (min-width:700px){.sheet{border-radius:26px}}
-.sh__top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:18px 18px 14px;background:var(--k);color:var(--color-white)}
-.sh__top b{display:block;font-size:15px}
-.sh__top small{display:block;font-size:12.5px;color:var(--mute-d)}
-.sh__x{margin-left:auto;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1)}
-.sh__steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 18px 16px;background:var(--k)}
-.sh__steps span{height:4px;border-radius:2px;background:var(--color-ink-5)}
-.sh__steps span.on{background:var(--color-white)}.sh__steps span.done{background:var(--y)}
-.sh__body{padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px))}
-@media (min-width:700px){.sh__body{padding:28px}}
-.sh__body .t{font-size:40px;margin-bottom:8px}
-.sh__body > p{margin:0 0 18px;color:var(--mute);font-size:15px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.opt{display:grid;gap:4px;align-content:start;min-height:100px;padding:16px;border-radius:18px;text-align:left;background:var(--w);box-shadow:inset 0 0 0 1.5px var(--line);transition:box-shadow .2s ease,background .2s ease}
-.opt:hover{box-shadow:inset 0 0 0 2px var(--k)}
-.opt[aria-pressed="true"]{background:var(--y);box-shadow:none}
-.opt b{font-family:var(--f-d);font-weight:900;font-stretch:50%;text-transform:uppercase;font-size:28px;line-height:.9}
-.opt small{color:var(--mute);font-size:13px;line-height:1.35}
-.opt[aria-pressed="true"] small{color:rgba(11,11,12,.75)}
-.fld{display:grid;gap:6px;margin-bottom:12px}
-.fld label{font-size:13px;font-weight:600;color:var(--mute)}
-.fld input,.fld textarea{width:100%;min-height:54px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--w);font:inherit;font-size:16px;color:var(--k)}
-.fld textarea{min-height:84px;resize:vertical}
-.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--k)}
-.err{font-size:13px;font-weight:600;color:var(--color-error)}
-.sh__nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px}
-.sh__back{font-weight:600;min-height:44px;padding:0 6px;color:var(--mute)}
-.sh__nav .cta{margin-left:auto}
-.sh__done{text-align:center;display:grid;justify-items:center;gap:12px;padding:10px 0}
-.sh__done > svg{width:110px;color:var(--k)}
 
 /* ───── the wolf pattern: one continuous field behind every white section, fading out at the sides ───── */
 :root{--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 280 240' width='280' height='240'%3E%3Cpath d='M236.0 0.0 L172.9 22.5 L151.8 18.0 L92.2 43.8 L54.8 57.2 L55.1 62.6 L11.0 69.6 L10.8 70.6 L18.0 76.8 L39.8 101.5 L0.0 119.0 L0.0 120.0 L90.2 185.9 L156.4 183.0 L205.5 197.9 L206.1 113.5 L233.8 88.9 L239.1 37.1Z' fill='none' stroke='%230B0B0C' stroke-opacity='.04' stroke-width='3'/%3E%3C/svg%3E")}

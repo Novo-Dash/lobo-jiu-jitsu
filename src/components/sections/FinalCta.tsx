@@ -3,8 +3,8 @@ import { FINAL } from '../../data/finalCta'
 import { SITE } from '../../data/site'
 import { gsap, lines, rise, useGSAP } from '../../lib/gsap'
 import { motionOK } from '../../lib/motion'
-import { track } from '../../lib/track'
-import { useBooking } from '../../booking/BookingContext'
+import { audienceOf } from '../../lib/audience'
+import { useBooking } from '../../nd'
 import { Cta } from '../ui/Cta'
 import { TitleText } from '../ui/Highlight'
 import { Icon } from '../ui/Icon'
@@ -32,11 +32,11 @@ export function FinalCta() {
         <p className="lead">{FINAL.lead}</p>
         <div className="who" role="group" aria-label={FINAL.whoLabel}>
           {FINAL.who.map((w) => (
-            <button key={w.who} type="button" onClick={() => { track.cta('final_who', { who: w.who }); open({ source: 'final_who', who: w.who }) }}>{w.label}</button>
+            <button key={w.who} type="button" onClick={() => open({ audience: audienceOf(w.who) })}>{w.label}</button>
           ))}
         </div>
         <div className="fin__row">
-          <Cta source="final" />
+          <Cta />
           <a className="call" href={SITE.phone.tel}><Icon name="phone" /><u>{SITE.phone.display}</u></a>
         </div>
       </div>

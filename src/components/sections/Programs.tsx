@@ -2,8 +2,8 @@ import { useRef } from 'react'
 import { PROGRAMS } from '../../data/programs'
 import { gsap, lines, useGSAP } from '../../lib/gsap'
 import { motionOK } from '../../lib/motion'
-import { track } from '../../lib/track'
-import { useBooking } from '../../booking/BookingContext'
+import { audienceOf } from '../../lib/audience'
+import { useBooking } from '../../nd'
 import { TitleText } from '../ui/Highlight'
 import { Photo } from '../ui/Photo'
 import { SquareArrow } from '../ui/SquareArrow'
@@ -47,7 +47,7 @@ export function Programs() {
                 <button
                   type="button"
                   className="pc"
-                  onClick={() => { track.cta('program', { program: c.name }); open({ source: 'program', who: c.who, program: c.name }) }}
+                  onClick={() => open({ audience: audienceOf(c.who) })}
                 >
                   <Photo photo={c.photo} alt="" sizes="(max-width: 899px) calc(50vw - 26px), 25vw" />
                   <span className="pc__b">

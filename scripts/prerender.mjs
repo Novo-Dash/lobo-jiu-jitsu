@@ -6,7 +6,8 @@
 //   stylesheet inline. The browser hydrates it (src/main.tsx).
 // • The bundle starts after the hero photo has been presented (decode, a frame, 300 ms; 2.5 s ceiling):
 //   measured on GB Lindale, it keeps the simulated LCP/FCP off the script chain.
-// • Meta Pixel / GA4 base tags only when VITE_META_PIXEL_ID / VITE_GA4_ID exist. [CONFIRMAR IDs]
+// • Tracking and the booking form come from the Novo Dash kit (src/nd, its nd:tracking block in
+//   index.html); /book gets an empty shell (dist/book/index.html) that the browser renders.
 // • robots.txt, sitemap.xml, llms.txt. While no domain is confirmed (VITE_SITE_URL): noindex.
 // ─────────────────────────────────────────────────────────────────────────────
 import fs from 'node:fs'
@@ -22,6 +23,8 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g
 const EMPTY_ROOT = '<div id="root"></div>'
 
 process.env.NODE_ENV ??= 'production'
+// The kit keeps a module-level reference to `window`: a stub for the render only (no effect runs here).
+globalThis.window ??= { location: { search: '', hash: '', pathname: '/', href: '' } }
 const ssr = await import(pathToFileURL(path.join(root, 'dist-server', 'entry-server.js')).href)
 const { SEO, jsonLd, llms, render } = ssr
 const SITE = SEO.site
@@ -29,11 +32,6 @@ const SITE = SEO.site
 // React 19 emits <link rel="preload" as="image"> for eager images inside #root; the head has the real one.
 const clean = (html) => html.replace(/<link rel="preload" as="image"[^>]*\/?>/g, '')
 
-const PIXEL = process.env.VITE_META_PIXEL_ID?.trim(), GA4 = process.env.VITE_GA4_ID?.trim()
-const tracking = [
-  PIXEL && `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${PIXEL}');fbq('track','PageView');</script>`,
-  GA4 && `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA4}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA4}');</script>`,
-].filter(Boolean).join('\n')
 
 const og = `${SITE}/og-image.jpg`, t = esc(SEO.ogTitle), d = esc(SEO.ogDescription)
 const head = `<meta name="robots" content="${SEO.preview ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}">
@@ -56,7 +54,7 @@ const head = `<meta name="robots" content="${SEO.preview ? 'noindex, nofollow' :
 <meta name="twitter:image" content="${og}">
 <meta name="format-detection" content="telephone=no">
 <link rel="preload" as="image" href="/images/final.webp" imagesrcset="/images/final-sm.webp 960w, /images/final.webp 1920w" imagesizes="(max-width: 899px) calc(100vw - 20px), calc(100vw - 28px)" fetchpriority="high">
-<script type="application/ld+json">${JSON.stringify(jsonLd()).replace(/</g, '\\u003c')}</script>${tracking ? '\n' + tracking : ''}`
+<script type="application/ld+json">${JSON.stringify(jsonLd()).replace(/</g, '\\u003c')}</script>`
 
 const deferEntry = (html) => {
   const entry = html.match(/<script type="module" crossorigin src="([^"]+)"><\/script>/)
@@ -84,6 +82,10 @@ const v2 = read('index.html').replace('<html lang="en"', '<html lang="en" class=
 must(v2.includes('class="v2"'), 'the v2 html class')
 write('v2/index.html', v2)
 
+// /book: the kit's booking page, rendered in the browser; never indexed
+fs.mkdirSync(path.join(dist, 'book'), { recursive: true })
+write('book/index.html', deferEntry(tpl.replace('<!--lobo:head-->', `<meta name="robots" content="noindex, nofollow">\n<link rel="canonical" href="${SITE}/book">`).replace('<title>', '<title>Book your free class · ')))
+
 write('robots.txt', SEO.preview
   ? 'User-agent: *\nDisallow: /\n'
   : `User-agent: *\nAllow: /\n\n${['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'Google-Extended', 'PerplexityBot', 'ClaudeBot', 'Applebot-Extended', 'Bingbot'].map((b) => `User-agent: ${b}\nAllow: /`).join('\n')}\n\nSitemap: ${SITE}/sitemap.xml\n`)
@@ -93,4 +95,4 @@ write('llms.txt', llms())
 fs.rmSync(path.join(root, 'dist-server'), { recursive: true, force: true })
 // public/memory (briefing, decisions, prints) is the project's notebook (PRD 3), never the site
 fs.rmSync(path.join(dist, 'memory'), { recursive: true, force: true })
-console.log(`prerender: / · ${(fs.statSync(path.join(dist, 'index.html')).size / 1024).toFixed(0)} KB${SEO.preview ? ' · PREVIEW (noindex) at ' + SITE : ' · ' + SITE}${PIXEL ? ' · pixel' : ''}${GA4 ? ' · ga4' : ''}`)
+console.log(`prerender: / · ${(fs.statSync(path.join(dist, 'index.html')).size / 1024).toFixed(0)} KB${SEO.preview ? ' · PREVIEW (noindex) at ' + SITE : ' · ' + SITE}`)

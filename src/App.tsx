@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useBooking } from './booking/BookingContext'
 import { Nav } from './components/layout/Nav'
 import { SkipLink } from './components/layout/SkipLink'
 import { PushpinTearFooter } from './components/footer/PushpinTearFooter'
@@ -18,19 +17,16 @@ import { Schedule } from './components/sections/Schedule'
 import { WalkIn } from './components/sections/WalkIn'
 import { Why } from './components/sections/Why'
 import { Sprite } from './components/ui/Sprite'
-import { captureUTMs } from './hooks/useUTMs'
 import { ScrollTrigger } from './lib/gsap'
 import { scrollToTarget, startLenis } from './lib/lenis'
 import { motionOK } from './lib/motion'
-import { startPageTracking } from './lib/track'
+import { useBooking } from './nd'
 
 /** The page, in the order of the mental journey (PRD 6). */
 export default function App() {
   const { isOpen } = useBooking()
 
   useEffect(() => {
-    captureUTMs()
-    const stopTracking = startPageTracking()
     const stopLenis = motionOK() ? startLenis() : () => {}
     // anchors: through Lenis, so the pinned scenes measure the same scroll
     const onClick = (e: MouseEvent) => {
@@ -47,10 +43,10 @@ export default function App() {
     const refresh = () => ScrollTrigger.refresh()
     void document.fonts?.ready.then(refresh)
     addEventListener('load', refresh)
-    return () => { stopTracking(); stopLenis(); document.removeEventListener('click', onClick); removeEventListener('load', refresh) }
+    return () => { stopLenis(); document.removeEventListener('click', onClick); removeEventListener('load', refresh) }
   }, [])
 
-  // the page holds still while the booking sheet is open
+  // the page holds still while the kit's booking form is open
   useEffect(() => {
     const l = window.__lenis
     if (!l) return

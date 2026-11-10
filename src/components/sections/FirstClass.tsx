@@ -52,7 +52,7 @@ export function FirstClass() {
       <div className="first__pin">
         <div className="shell first__top">
           <h2 className="t t-1" id="fc-h"><TitleText title={FIRST.title} /></h2>
-          <div className="first__cta"><Cta tone="r" source="first_class" /></div>
+          <div className="first__cta"><Cta tone="r" /></div>
         </div>
         <div className="belt" aria-hidden="true">
           <div className="belt__cloth" /><div className="belt__stitch" />

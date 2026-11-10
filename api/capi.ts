@@ -1,9 +1,17 @@
 /*
- * Mirrors the Pixel events into the Meta Conversions API, deduplicated by the browser's event_id
- * (the OCJ / Novo Dash kit). Needs META_PIXEL_ID + META_CAPI_ACCESS_TOKEN on Vercel [CONFIRMAR];
- * without the token the browser Pixel still reports on its own.
+ * Novo Dash kit: mirrors the Pixel events into the Meta Conversions API,
+ * deduplicated by the browser's event_id. Needs META_CAPI_ACCESS_TOKEN on the
+ * Vercel project; without it the browser Pixel still reports on its own.
  */
 import { createHash } from 'node:crypto'
+
+// .js on purpose: under "type": "module" Node needs the extension; Vercel compiles the .ts.
+import raw from '../src/nd/client.js'
+
+// Every pixel of the LP: the academy's, or each unit's on a multi-unit LP (client.ts { units }).
+type Unit = { tracking: { pixel: string } }
+const data = raw as unknown as Unit & { units?: Record<string, Unit> }
+const pixels = new Set(Object.values(data.units ?? { main: data }).map((u) => u.tracking.pixel).filter(Boolean))
 
 type Body = {
   event?: string
@@ -25,8 +33,8 @@ export default async function handler(
 ): Promise<void> {
   const body = req.body ?? {}
   if (req.method !== 'POST' || !body.event || !body.event_id) return res.status(400).json({ error: 'bad request' })
-  // only this LP's pixel: the token reaches every pixel of the agency
-  if (!body.pixel_id || body.pixel_id !== process.env.META_PIXEL_ID) return res.status(400).json({ error: 'unknown pixel' })
+  // Only this LP's own pixels: the token reaches every pixel of the agency.
+  if (!body.pixel_id || !pixels.has(body.pixel_id)) return res.status(400).json({ error: 'unknown pixel' })
   const token = process.env.META_CAPI_ACCESS_TOKEN
   if (!token) return res.status(200).json({ ok: false })
 

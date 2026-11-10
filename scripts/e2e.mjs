@@ -1,6 +1,6 @@
-// e2e.mjs: the booking from a click to the CRM proxy, the hydration, and the reduced-motion layout.
+// e2e.mjs: the kit's booking form wired to the page, the hydration, and the reduced-motion layout.
 //   node scripts/e2e.mjs [url=http://localhost:4290/]
-// Locally /api/lead only logs the lead (LEAD_WEBHOOK_URL=log), so nothing reaches a real CRM.
+// Attribution (UTMs, click ids) is the kit's job (src/nd/attribution.ts).
 import { chromium } from 'playwright'
 
 const url = process.argv[2] ?? 'http://localhost:4290/'
@@ -8,46 +8,34 @@ const browser = await chromium.launch({ args: ['--mute-audio'] })
 const fail = []
 const ok = (cond, what) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${what}`); if (!cond) fail.push(what) }
 
-// 1 · booking, desktop
+// 1 · booking (the Novo Dash kit, src/nd): every #book link and the hero open the kit's form, its live
+//     class list loads, a schedule cell opens it, Escape closes it. Never submitted: the kit posts to the
+//     real GHL webhook (its own full test is lp-kit/e2e.cjs with the test identity + cleanup.sh).
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
   const errors = []
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()) })
   page.on('pageerror', (e) => errors.push(e.message))
-  let lead = null
-  page.on('request', (r) => { if (r.url().endsWith('/api/lead')) lead = JSON.parse(r.postData() ?? '{}') })
   await page.goto(url, { waitUntil: 'networkidle' })
   await page.waitForTimeout(3000)
+  ok((await page.locator('a[href="#book"]').count()) >= 8, 'the booking buttons are #book links')
   await page.click('#heroCta')
-  await page.getByRole('dialog').waitFor()
-  ok(await page.getByRole('heading', { name: "Who's training?" }).isVisible(), 'step 1 opens from the hero CTA')
-  await page.getByRole('button', { name: /A child/ }).click()
-  await page.fill('#f-age', '7')
-  await page.getByRole('button', { name: /First time/ }).click()
-  await page.getByRole('button', { name: 'Continue' }).click()
-  await page.getByRole('button', { name: 'Book Your Free Trial Class' }).last().click()
-  ok(await page.getByText('Add your name.').isVisible(), 'inline error: name')
-  await page.fill('#f-name', 'Test Parent')
-  await page.fill('#f-phone', '3315550100')
-  ok((await page.inputValue('#f-phone')) === '(331) 555-0100', 'phone formats as typed')
-  await page.fill('#f-email', 'test@example.com')
-  const res = page.waitForResponse((r) => r.url().endsWith('/api/lead'))
-  await page.getByRole('button', { name: 'Book Your Free Trial Class' }).last().click()
-  ok((await res).status() === 200, '/api/lead answers 200')
-  await page.getByRole('heading', { name: "We'll match you to the right class." }).waitFor()
-  ok(true, 'success screen')
-  ok(lead?.who === 'child' && lead?.age === '7' && lead?.experience === 'new' && lead?.source === 'hero' && !!lead?.event_id, 'payload carries who, age, experience, source, event_id')
-  await page.keyboard.press('Escape')
-  await page.waitForTimeout(1000)
-  ok(!(await page.getByRole('dialog').count()), 'Escape closes the sheet')
-
-  // prefilled from the schedule: straight to step 2 with the class
-  await page.evaluate(() => document.getElementById('schedule').scrollIntoView())
-  await page.waitForTimeout(800)
+  await page.locator('.nd-dialog').waitFor()
+  ok(true, 'the hero button opens the kit form')
+  await page.keyboard.press('Escape'); await page.waitForTimeout(600)
+  ok(!(await page.locator('.nd-dialog').count()), 'Escape closes it')
+  await page.locator('.pc').first().click()
+  await page.locator('.nd-dialog').waitFor(); await page.waitForTimeout(3500)
+  ok((await page.locator('.nd-option-title').count()) > 0, 'a program card opens it on the live kids classes')
+  await page.keyboard.press('Escape'); await page.waitForTimeout(600)
+  await page.evaluate(() => document.getElementById('schedule').scrollIntoView()); await page.waitForTimeout(800)
   await page.locator('.board .cls').first().click()
-  ok(await page.getByText(/From the page:/).isVisible(), 'a schedule cell opens step 2 with the class')
+  ok(await page.locator('.nd-dialog').isVisible(), 'a schedule cell opens it')
   await page.keyboard.press('Escape')
   ok(!errors.length, `no console errors (${errors.slice(0, 3).join(' | ')})`)
+  const book = await page.goto(url.replace(/\/$/, '') + '/book', { waitUntil: 'networkidle' })
+  await page.waitForTimeout(2000)
+  ok(book.status() === 200 && !(await page.locator('#top').count()) && (await page.locator('.nd').count()) > 0, '/book is the kit page alone')
   await page.close()
 }
 
@@ -77,25 +65,6 @@ const ok = (cond, what) => { console.log(`${cond ? 'ok  ' : 'FAIL'} ${what}`); i
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)
   ok(!overflow, 'no horizontal scroll at 390')
   await ctx.close()
-}
-
-// 4 · campaign tracking: the UTMs and click ids of the landing URL reach the lead
-{
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
-  let lead = null
-  page.on('request', (r) => { if (r.url().endsWith('/api/lead')) lead = JSON.parse(r.postData() ?? '{}') })
-  await page.goto(url + '?utm_source=facebook&utm_medium=paid&utm_campaign=lobo-trial&fbclid=TEST123&gclid=G456', { waitUntil: 'networkidle' })
-  await page.waitForTimeout(2500)
-  await page.evaluate(() => window.scrollTo(0, 0))
-  await page.click('#heroCta')
-  await page.getByRole('button', { name: /Myself/ }).click()
-  await page.getByRole('button', { name: 'Continue' }).click()
-  await page.fill('#f-name', 'Test Adult'); await page.fill('#f-phone', '3315550101'); await page.fill('#f-email', 'adult@example.com')
-  const res = page.waitForResponse((r) => r.url().endsWith('/api/lead'))
-  await page.getByRole('button', { name: 'Book Your Free Trial Class' }).last().click()
-  await res
-  ok(lead?.utm_source === 'facebook' && lead?.utm_campaign === 'lobo-trial' && lead?.fbclid === 'TEST123' && lead?.gclid === 'G456' && lead?.who === 'adult', 'UTMs + fbclid + gclid travel with the lead')
-  await page.close()
 }
 
 await browser.close()

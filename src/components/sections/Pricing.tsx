@@ -75,7 +75,7 @@ export function Pricing() {
             ))}
           </div>
           <p className="inv__note">{PRICING.note}</p>
-          <div className="inv__cta"><Cta tone="r" source="pricing" /></div>
+          <div className="inv__cta"><Cta tone="r" /></div>
         </div>
         <div className="card3d" role="img" aria-label={`${PRICING.cardFoot}: ${p.name}, ${p.price}${p.perLong}`}>
           <div className="tilt" ref={tilt}>

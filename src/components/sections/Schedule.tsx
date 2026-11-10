@@ -4,8 +4,8 @@ import type { Day } from '../../types'
 import { lines, useGSAP } from '../../lib/gsap'
 import { motionOK } from '../../lib/motion'
 import { auroraNow, dateOf } from '../../lib/time'
-import { track } from '../../lib/track'
-import { useBooking } from '../../booking/BookingContext'
+import { audienceOf } from '../../lib/audience'
+import { useBooking } from '../../nd'
 import { Cta } from '../ui/Cta'
 import { TitleText } from '../ui/Highlight'
 
@@ -30,10 +30,8 @@ export function Schedule() {
   useGSAP(() => { if (motionOK()) lines(root.current!.querySelector('h2')!) }, { scope: root })
 
   const today = now?.today
-  const book = (c: ClassSlot, d: Day, source: string) => {
-    track.cta(source, { program: c.program, day: d })
-    open({ source, who: c.who, program: c.program, day: d, time: fmtRow(c.start) })
-  }
+  // a class opens the kit's form on that class's audience (its live list has the real times)
+  const book = (c: ClassSlot) => open({ audience: audienceOf(c.who) })
   const shown = (c: ClassSlot) => filter === 'all' || c.kind === filter
   const list = classesOn(day).filter(shown)
 
@@ -81,7 +79,7 @@ export function Schedule() {
                     return (
                       <td key={d} className={d === today ? 'today' : undefined}>
                         {CLASSES.filter((c) => c.start === t && c.days.includes(d)).map((c) => (
-                          <button key={c.program} type="button" className={`cls${shown(c) ? '' : ' dim'}`} data-k={c.kind} tabIndex={shown(c) ? undefined : -1} aria-hidden={shown(c) ? undefined : true} onClick={() => book(c, d, 'schedule_cell')}>
+                          <button key={c.program} type="button" className={`cls${shown(c) ? '' : ' dim'}`} data-k={c.kind} tabIndex={shown(c) ? undefined : -1} aria-hidden={shown(c) ? undefined : true} onClick={() => book(c)}>
                             <b>{c.program}</b><small>{c.sub}</small>
                           </button>
                         ))}
@@ -103,7 +101,7 @@ export function Schedule() {
         <ul className="dayslots">
           {list.length ? list.map((c) => (
             <li key={c.program + c.start}>
-              <button type="button" data-k={c.kind} onClick={() => book(c, day, 'schedule_row')}>
+              <button type="button" data-k={c.kind} onClick={() => book(c)}>
                 <time>{fmtRow(c.start)}</time>
                 <span><b>{c.program}</b><small>{c.sub}</small></span>
                 <span className="go">{SCHEDULE.book}</span>
@@ -115,7 +113,7 @@ export function Schedule() {
 
         <div className="sch__foot">
           <span><b>{SCHEDULE.foot.lead}</b>{SCHEDULE.foot.rest}</span>
-          <Cta size="sm" source="schedule_foot" />
+          <Cta size="sm" />
         </div>
       </div>
     </section>

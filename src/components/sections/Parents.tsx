@@ -83,7 +83,7 @@ export function Parents() {
             </div>
           </div>
         </div>
-        <div className="par__cta"><Cta tone="r" source="parents" who="child" /></div>
+        <div className="par__cta"><Cta tone="r" who="child" /></div>
       </div>
     </section>
   )

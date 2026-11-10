@@ -5,7 +5,7 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import App from './App'
-import { BookingProvider } from './booking/BookingContext'
+import { BookingProvider } from './nd'
 
 export { jsonLd, llms, SEO } from './data/seo'
 
