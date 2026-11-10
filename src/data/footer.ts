@@ -1,0 +1,38 @@
+// The torn-poster footer (reference/anexo-footer-LOBO.md). Every word it shows.
+export const FOOTER = {
+  backToTop: 'Back to top',
+  copyEmail: (e: string) => `Copy ${e}`,
+  copyTitle: 'Copy email',
+  copied: 'email copied',
+  news: 'Your first class is free',
+  pill: "Tell us who's training",
+  scheduleFallback: 'See the class schedule',
+  clockPrefix: 'Aurora',
+  next: (program: string, when: string, time: string) => `Next class: ${program}, ${when} at ${time}`,
+  today: 'today',
+  tomorrow: 'tomorrow',
+  colPrograms: {
+    title: 'programs',
+    label: 'Programs',
+    links: ['Little Lobos, 4–7', 'Kids, 8–11', 'Juniors, 12–15', 'Adults, 16+'],
+    big: 'book.',
+  },
+  colSchool: {
+    title: 'the school',
+    label: 'The school',
+    links: [
+      { href: '#professor', label: 'Professor Fred' },
+      { href: '#schedule', label: 'Schedule' },
+      { href: '#pricing', label: 'Pricing' },
+      { href: '#faq', label: 'FAQ' },
+    ],
+    big: 'call.',
+  },
+  pin: { label: 'Pull the pin: tear a new edge', title: 'Pull the pin' },
+  paperLine: '646 S Frontenac St, Suite 109 · Aurora, IL',
+  bubble: 'call or text',
+  directions: 'directions',
+  copyright: '© 2026 Lobo Jiu-Jitsu',
+  credit: 'Registered with the IBJJF as Fred Lobo BJJ',
+  by: { label: 'By Novo Dash', url: 'https://lp.novodash.com/site?utm_source=lobo-bjj-aurora-il&utm_medium=referral&utm_campaign=lp-footer' },
+}

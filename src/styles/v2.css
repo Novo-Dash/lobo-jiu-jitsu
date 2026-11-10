@@ -1,0 +1,124 @@
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────
+   /v2 · the dark test theme (Adryan, 10/11). The same page; html.v2 (index.html head script, and
+   dist/v2/index.html from the prerender) turns every white section into the footer's dark paper:
+   its tone (--color-sheet) and its grain (made in the browser, main.tsx), no wolf pattern. In the
+   manner of Lion BJJ Braga: cards one step lighter than the page with a light hairline, three levels
+   of warm white for type. The essence stays: the yellow band on the titles, the red buttons, the
+   objects (post-its, polaroid, white belt, yellow panel, yellow step card) as they were. What was
+   black on white turns white on black. Every rule here starts with .v2: the main route is untouched.
+   ───────────────────────────────────────────────────────────────────────────────────────────────── */
+.v2{
+  color-scheme:dark;
+  --v-bg:var(--color-sheet);
+  --v-card:color-mix(in srgb,var(--color-sheet) 93%,var(--color-white));
+  --v-card-2:color-mix(in srgb,var(--color-sheet) 87%,var(--color-white));
+  --v-t1:rgba(255,255,255,.94); --v-t2:rgba(255,255,255,.66); --v-t3:rgba(255,255,255,.42);
+  --v-hair:rgba(255,255,255,.1); --v-hair-2:rgba(255,255,255,.2);
+  --v-lift:0 40px 80px -40px rgba(0,0,0,.85);
+  /* the light-surface tokens, read on dark */
+  --mute:var(--v-t2); --line:var(--v-hair); --off:var(--v-card); --off-2:var(--v-card-2);
+}
+/* the footer and the booking sheet keep their own paper */
+.v2 .tpf{--mute:var(--color-mute); --line:var(--color-line); --off:var(--color-off); --off-2:var(--color-off-2)}
+
+/* ── surfaces: the footer's dark paper, its grain in place of the pattern ── */
+.v2 :is(.hero,.wt,.pf,.walk,.first,.dq){background-color:var(--v-bg);color:var(--v-t1)}
+.v2 :is(.hero,.wt,.pf,.walk,.first,.dq__stage)::before{background:var(--grain,none) 0 0/160px repeat;opacity:.45;-webkit-mask-image:none;mask-image:none}
+.v2 .dq{position:relative}
+.v2 :focus-visible{outline-color:var(--y)}
+
+/* ── 02 · programs ── */
+.v2 .step__mark,.v2 .tape__nums span,.v2 .pg__foot b{color:var(--v-t1)}
+.v2 .step__mark::after{border-top-color:var(--v-hair-2)}
+.v2 .step__mark b{background:var(--y)}
+.v2 .pc{box-shadow:0 0 0 1px var(--v-hair),var(--v-lift)}
+
+/* ── 03 · parents: the black backpack gets a rim of light and a deeper floor shadow ── */
+.v2 .pack{filter:drop-shadow(0 0 1px rgba(255,255,255,.4)) drop-shadow(0 0 28px rgba(255,255,255,.07))}
+.v2 .bag__center::before{content:"";position:absolute;inset:6% 4% 12%;z-index:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,255,255,.08),transparent)}
+.v2 .pack__shadow{background:radial-gradient(closest-side,rgba(0,0,0,.75),rgba(0,0,0,.4) 40%,rgba(0,0,0,.12) 72%,transparent)}
+.v2 .note{box-shadow:0 30px 50px -28px rgba(0,0,0,.9)}
+.v2 .pol{box-shadow:0 30px 50px -26px rgba(0,0,0,.9)}
+
+/* ── 04 · adults: the black question bubble becomes a lifted card ── */
+.v2 .dq__count b{color:var(--v-t1)}
+.v2 .dq__bars i.on,.v2 .dq__bars i.done{background:var(--v-t1)}
+.v2 .bq,.v2 .bq::after{background:var(--v-card-2)}
+.v2 .bq{box-shadow:inset 0 0 0 1px var(--v-hair),var(--v-lift)}
+.v2 .ba__av{box-shadow:0 0 0 3px var(--v-hair-2)}
+
+/* ── 05 · professor ── */
+.v2 .pf__card{background:var(--v-card);box-shadow:0 0 0 1px var(--v-hair),var(--v-lift)}
+.v2 .pf__belt{box-shadow:0 0 0 1px var(--v-hair-2)}
+
+/* ── 07 · walk-in ── */
+.v2 .wf{color:var(--v-t1)}
+.v2 .wf--k{background:var(--k);box-shadow:inset 0 0 0 1px var(--v-hair)}
+.v2 .walk__bar{background:var(--v-hair)}
+.v2 .wi img{box-shadow:0 0 0 1px var(--v-hair),0 30px 60px -24px rgba(0,0,0,.9)}
+
+/* ── 08 · first class: the black step card on the dark page gets its rim ── */
+.v2 .scard[data-c="k"]{box-shadow:inset 0 0 0 1px var(--v-hair-2),var(--v-lift)}
+.v2 .scard[data-c="y"]{box-shadow:0 50px 90px -60px rgba(0,0,0,.9)}
+.v2 .belt{filter:drop-shadow(0 34px 30px rgba(0,0,0,.6))}
+
+/* ── 09 · schedule: the board on a card, black-on-white chips turned white-on-black ── */
+.v2 .board{background:var(--v-card);color:var(--v-t1);box-shadow:0 0 0 1px var(--v-hair),var(--v-lift)}
+.v2 .board tbody th:first-child{background:var(--v-card);color:var(--v-t2);border-bottom-color:var(--v-hair)}
+.v2 .board td{border-bottom-color:var(--v-hair);border-right-color:var(--v-hair)}
+.v2 .board td.none{background:repeating-linear-gradient(-45deg,var(--v-card) 0 10px,var(--v-card-2) 10px 11px)}
+.v2 .board td.none span{background:var(--v-card-2);box-shadow:0 0 0 1px var(--v-hair);color:var(--v-t2)}
+.v2 .cls{border-left-color:var(--v-t1);color:var(--v-t1)}
+.v2 .cls:hover{background:var(--color-white);color:var(--k)}
+.v2 .cls:hover small{color:var(--color-mute)}
+.v2 .filters button{box-shadow:inset 0 0 0 1.5px var(--v-hair-2);color:var(--v-t1)}
+.v2 :is(.filters button[aria-pressed="true"],.daytabs button[aria-selected="true"]){background:var(--color-white);color:var(--k)}
+.v2 .daytabs button{color:var(--v-t1)}
+.v2 .dayslots{background:var(--v-card);color:var(--v-t1);box-shadow:0 0 0 1px var(--v-hair)}
+.v2 .dayslots button{border-bottom-color:var(--v-hair);color:var(--v-t1)}
+.v2 .dayslots b{border-left-color:var(--v-t1)}
+.v2 .sch__foot b{color:var(--v-t1)}
+
+/* ── 10 · pricing: the plans as dark cards, the black member card with a rim ── */
+.v2 .plan{color:var(--v-t1)}
+.v2 .plan:hover{box-shadow:inset 0 0 0 1.5px var(--v-t1)}
+.v2 .plan[aria-pressed="true"]{color:var(--k)}
+.v2 .mcard__f{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 40px 70px -34px rgba(0,0,0,.9),0 0 60px -10px rgba(250,192,2,.12)}
+.v2 .mcard__b{box-shadow:0 40px 70px -34px rgba(0,0,0,.9)}
+
+/* ── 11 · reviews ── */
+.v2 .rc{color:var(--v-t1)}
+.v2 .rc__who{border-top-color:var(--v-hair)}
+.v2 .rc.on{background:var(--k);box-shadow:inset 0 0 0 1px var(--v-hair-2),var(--v-lift)}
+.v2 .rv__nav button{box-shadow:inset 0 0 0 1.5px var(--v-hair-2);color:var(--v-t1)}
+.v2 .rv__nav button:hover{background:var(--color-white);color:var(--k)}
+.v2 .rv__dots i{background:var(--v-hair-2)}
+.v2 .rv__dots i.on{background:var(--v-t1)}
+.v2 .gbadge{background:var(--v-card);color:var(--v-t1);box-shadow:0 0 0 1px var(--v-hair),0 10px 24px -18px rgba(0,0,0,.9)}
+
+/* ── 12 · faq: the open question in the yellow, like Lion's brass ── */
+.v2 .qa{background:var(--v-card);color:var(--v-t1)}
+.v2 .qa__q{color:var(--v-t1)}
+.v2 .pm{background:var(--v-card-2)}
+.v2 .pm::before,.v2 .pm::after{background:var(--v-t1)}
+.v2 .qa[data-open]{box-shadow:inset 0 0 0 1px rgba(250,192,2,.45)}
+.v2 .qa[data-open] .pm{background:var(--y)}
+.v2 .qa[data-open] .pm::before,.v2 .qa[data-open] .pm::after{background:var(--k)}
+.v2 .qa__a p{color:var(--v-t2)}
+
+/* ── booking sheet ── */
+.v2 .sheet{background:var(--v-bg);color:var(--v-t1);box-shadow:0 0 0 1px var(--v-hair)}
+.v2 .opt{background:var(--v-card);color:var(--v-t1);box-shadow:inset 0 0 0 1.5px var(--v-hair)}
+.v2 .opt:hover{box-shadow:inset 0 0 0 2px var(--v-t1)}
+.v2 .opt[aria-pressed="true"]{background:var(--y);color:var(--k)}
+.v2 .fld input,.v2 .fld textarea{background:var(--v-card);color:var(--v-t1);border-color:var(--v-hair-2)}
+.v2 .fld input:focus,.v2 .fld textarea:focus{border-color:var(--y)}
+.v2 .sh__done > svg{color:var(--y)}
+/* the sheet's black buttons (Continue, Send) would vanish on the dark sheet: yellow, like the page's */
+.v2 .sheet .cta--k{background:var(--y);color:var(--k);box-shadow:0 14px 34px -16px rgba(250,192,2,.55)}
+.v2 .sheet .cta--k .cta__w{background:var(--k);color:var(--y)}
+.v2 .sh__back{color:var(--v-t2)}
+/* the black badges (Professor, backpack) on the dark page: a clearer edge */
+.v2 :is(.pf__panel,.bag__panel){box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 50px 90px -50px rgba(0,0,0,.9)}
+.v2 .bag__center::before{display:none}

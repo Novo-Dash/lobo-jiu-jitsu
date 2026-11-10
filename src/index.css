@@ -1,0 +1,100 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   LOBO JIU-JITSU · tokens, fonts and the port of the approved prototype.
+   The ONLY file with hex values (PRD 0.4). Everything else reads these tokens.
+   Order matters: @imports first, @font-face last (a @font-face between @imports
+   makes Vite drop the imports that follow it).
+   ───────────────────────────────────────────────────────────────────────────── */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "./styles/site.css";
+@import "./styles/app.css";
+@import "./styles/v2.css";
+
+@theme static {
+  /* the brand: the Instagram's yellow (sampled from a post), the logo's black, white */
+  --color-yellow: #FAC002;
+  --color-yellow-2: #E0AC00;
+  --color-yellow-hi: #FFD12E;
+  --color-yellow-pale: #FFE27A;
+  --color-yellow-ink: #1A1400;
+  --color-ink: #0B0B0C;
+  --color-ink-2: #141416;
+  --color-ink-3: #1D1D20;
+  --color-ink-4: #2A2A2E;
+  --color-ink-5: #2E2E33;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-sheet: #1B1B1C; /* the footer sheet as it reads at its top edge (ink + its light + grain) */
+  --color-off: #F3F1EC;
+  --color-off-2: #E7E4DD;
+  --color-line: #E2DFD8;
+  --color-line-2: #ECE9E3;
+  --color-paper-2: #FAF9F6;
+  --color-mute: #6A6A70;
+  --color-mute-d: #A3A3AA;
+  --color-mute-l: #C9C9CF;
+  --color-mute-k: #8C8C94;
+  --color-mute-warm: #9A968D;
+  --color-mute-warm-2: #B9B5AC;
+  --color-mute-foot: #7A7A82;
+  --color-mute-foot-2: #B5B5BC;
+  --color-error: #B4141E;
+
+  /* only on the backpack: the blue of the academy's mat */
+  --color-mat-1: #3D6BF0;
+  --color-mat-2: #14308F;
+  --color-mat-3: #4A76F5;
+  --color-mat-4: #1838A6;
+  --color-mat-5: #2A55D6;
+
+  /* objects: the post-it, the panel, the member card, the belt */
+  --color-note-1: #FFE88A;
+  --color-note-2: #FFD93D;
+  --color-note-fold: #F0B400;
+  --color-note-ink: #1E1A0A;
+  --color-note-title: #141414;
+  --color-panel-edge: #E8B000;
+  --color-card-hi: #FFD43B;
+  --color-card-lo: #E2AA00;
+  --color-kids-bar: #E0A800;
+  --color-belt-2: #F1EEE8;
+  --color-belt-3: #E6E2DA;
+  --color-belt-bar: #1F1F22;
+  --color-belt-red: #C1121F;
+
+  /* the drawn map (fallback under the Google embed) */
+  --color-map-0: #141416;
+  --color-map-1: #19191C;
+  --color-map-2: #1F1F23;
+  --color-map-3: #26262B;
+  --color-map-4: #2C2C31;
+  --color-map-5: #232327;
+  --color-map-6: #5A5A62;
+  --color-map-park: #203A24;
+  --color-map-park-ink: #4E6B52;
+
+  /* the footer's pushpin and paper */
+  --color-pin-needle-1: #5B616B;
+  --color-pin-needle-2: #F4F5F7;
+  --color-pin-needle-3: #A3A9B2;
+  --color-pin-needle-4: #4A4F57;
+  --color-flap-shade: #2A2410;
+
+  /* Google's own mark (the reviews badge) */
+  --color-g-blue: #4285F4;
+  --color-g-green: #34A853;
+  --color-g-yellow: #FBBC05;
+  --color-g-red: #EA4335;
+}
+
+/* ── fonts: self-hosted (PRD 9), preloaded in index.html. Saira is cut to the one instance the page
+   uses (wdth 50, wght 900: 13 KB); `block` + preload, so the condensed titles never paint in a wide
+   fallback and reflow (house measurement, see public/memory/design-decisions.md). */
+@font-face { font-family: "Saira"; src: url("/fonts/saira-condensed-900.woff2") format("woff2"); font-weight: 100 900; font-stretch: 50% 125%; font-style: normal; font-display: block; }
+@font-face { font-family: "Inter"; src: url("/fonts/inter-latin.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: block; }
+/* Parents note titles: Scribble Kidsy, the Satori Kids display (Adryan, 10/11;
+   it replaces Permanent Marker). Subset to the glyphs of the three titles and "Promotion day" (28 KB; the whole Latin set is 116 KB). If a post-it title changes, run again:
+   python -m fontTools.subset ../satori-bjj-phoenix-az/public/fonts/scribble-kidsy.woff2 --text="<the titles> Promotion day'’" --flavor=woff2 --output-file=public/fonts/scribble-kidsy.woff2 */
+@font-face { font-family: "Scribble Kidsy"; src: url("/fonts/scribble-kidsy.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"); size-adjust: 107%; ascent-override: 90%; descent-override: 22%; line-gap-override: 0%; }
+@font-face { font-family: "Saira Fallback"; src: local("Arial Narrow"), local("Arial"); size-adjust: 78%; }

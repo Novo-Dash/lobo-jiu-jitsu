@@ -1,0 +1,566 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   What the React build adds to the prototype's CSS (site.css): inline styles moved to classes,
+   the semantic markup (lists, row headers), Base UI parts, the CSS hero entrance, the PRD fixes.
+   No hex here either: tokens only.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* SplitText masks: room above and below so accents and descenders are never clipped (PRD 0.4.2(2)) */
+.ln-mask{padding-block:.3em .08em;margin-block:-.3em -.08em}
+.sr{clip-path:inset(50%)}
+[role="list"]{list-style:none;margin:0;padding:0}
+
+/* I · hero: the photo sits in a wrapper so the entrance (CSS, from the first paint) and the scroll
+   scrub (GSAP, on the img) never fight over one transform */
+.hero__media{position:absolute;inset:0;z-index:-2;overflow:hidden;animation:lb-zoom 2.2s cubic-bezier(.16,1,.3,1) both}
+.hero__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;transform:scale(1.12);will-change:transform}
+.hero__in .t-hero{animation:lb-unmask 1.15s cubic-bezier(.16,1,.3,1) .2s both}
+.hero__sub{animation:lb-rise 1s cubic-bezier(.33,1,.68,1) .6s both}
+.hero__cta{animation:lb-rise 1s cubic-bezier(.33,1,.68,1) .7s both}
+@keyframes lb-zoom{from{transform:scale(1.16)}to{transform:none}}
+@keyframes lb-unmask{from{clip-path:inset(100% -4% -12% -4%);transform:translateY(42px)}to{clip-path:inset(-12% -4% -12% -4%);transform:none}}
+@keyframes lb-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* II · programs */
+.pg__head{margin-bottom:clamp(46px,calc(7vh / var(--zs, 1)),70px)}
+.stairs{list-style:none;margin:0;padding:0}
+
+/* III · parents: the tilts move to `rotate`, so the GSAP entrance (transform) adds to them */
+.par__h{margin-top:14px}
+
+
+
+/* IV · adults: the CTA is visible by default; only the live scene fades it in */
+.dq__chat{list-style:none;padding:0;margin:10px 0 0}
+.dq .dq__end{opacity:1}
+.dq.is-live .dq__end{opacity:0}
+
+/* V · professor */
+.bb__tail{flex:.25}
+
+/* VI · why */
+.why{padding-top:clamp(30px,calc(5vh / var(--zs, 1)),60px)}
+
+/* VII · walk in: only one of the two versions is displayed at a time */
+.wi__in{margin:0}
+.walk__flat-h{margin-bottom:24px}
+.walk__rail{list-style:none;margin:0}
+.still .walk__stage{display:none}
+.still .walk__flat{display:block;padding:80px 0 60px}
+.still .walk__rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--gr) 0 var(--gl);scrollbar-width:none}
+.still .walk__rail > *{flex:none;scroll-snap-align:start}
+.still .walk__rail img{height:340px;width:auto!important;border-radius:18px}
+.still .walk__rail .wf{width:260px;height:340px;display:flex;flex-direction:column;justify-content:flex-end}
+
+/* VIII · first class */
+.slist .si h3{margin:0}
+
+/* IX · schedule: the time column is a row header (th), dressed like the prototype's first cell */
+.sch__note{margin:12px 0 0;color:var(--mute)}
+.board tbody th:first-child{width:auto;padding:14px 12px;background:var(--w);color:var(--mute);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;text-align:left;vertical-align:top;border-right:0;border-bottom:1px solid var(--color-line-2)}
+.board tr:last-child th{border-bottom:0}
+.board thead th:first-child{width:92px}
+.dayslots__none{padding:22px 0;color:var(--mute)}
+
+/* X · pricing */
+.inv__h{margin-top:16px}
+.plan__n{font:inherit}
+.mcard{transition:transform 1s var(--ease)}
+
+/* XIII · final */
+.fin__bg img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+
+/* XIV · find us: the Google map on a dark skin, the drawn map underneath as the fallback */
+.map__draw{position:absolute;inset:0;width:100%;height:100%}
+.map__dash{stroke:rgba(250,192,2,.35);fill:none}
+.map__txt{font-family:var(--f-b);font-size:12px;font-weight:600;fill:var(--color-map-6)}
+.map__txt--park{fill:var(--color-map-park-ink)}
+.map__frame{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;transition:opacity .8s ease;filter:grayscale(1) invert(.92) contrast(.88) brightness(.95)}
+.map.is-live .map__frame{opacity:1}
+.map__pin{pointer-events:none}
+
+/* XV · footer: the colours the prototype mixed in JS, mixed in CSS from the tokens */
+.tpf{
+  --tpf-flap:color-mix(in srgb,var(--color-off) 65%,var(--color-white));
+  --tpf-rim:color-mix(in srgb,var(--tpf-flap) 40%,var(--color-white));
+  --tpf-flap-0:color-mix(in srgb,var(--tpf-flap) 66%,var(--color-flap-shade));
+  --tpf-flap-1:color-mix(in srgb,var(--tpf-flap) 92%,var(--color-flap-shade));
+  --pin-mid:var(--color-yellow);
+  --pin-hi:color-mix(in srgb,var(--color-yellow) 38%,var(--color-white));
+  --pin-lo:color-mix(in srgb,var(--color-yellow) 58%,var(--color-black));
+  --pin-deep:color-mix(in srgb,var(--color-yellow) 34%,var(--color-black));
+}
+.tpf-gap{width:.6em}
+.tpf-mailbox{position:relative}
+.tpf-ink-fill{fill:var(--color-ink)}
+.tpf-white-fill{fill:var(--color-white)}
+.tpf-white-stroke{stroke:var(--color-white)}
+.tpf-shadow-flood{flood-color:var(--color-ink)}
+.tpf .tpf-big{justify-self:inherit;text-align:inherit}
+.tpf-col.l .tpf-big{justify-self:start}.tpf-col.r .tpf-big{justify-self:end}
+
+/* booking sheet on Base UI Dialog: backdrop + viewport + popup */
+.modal-bd{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.66);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:opacity .3s ease}
+.modal-bd[data-starting-style],.modal-bd[data-ending-style]{opacity:0}
+.modal{position:fixed;inset:0;z-index:81;display:grid;place-items:end center;background:none;backdrop-filter:none}
+@media (min-width:700px){.modal{place-items:center;padding:20px}}
+.sheet{transition:transform .5s cubic-bezier(.33,1,.68,1),opacity .4s ease}
+.sheet[data-starting-style],.sheet[data-ending-style]{transform:translateY(40px);opacity:0}
+.sh__av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--y);color:var(--k)}
+.sh__av svg{width:24px}
+.sh__x svg{width:16px;height:16px}
+.sh__body .t{margin:0 0 8px}
+.sh__body form > p:not(.err){margin:0 0 18px;color:var(--mute);font-size:15px}
+.fld__l{font-size:13px;font-weight:600;color:var(--mute)}
+.fld .err{margin-top:2px}
+.fld input[aria-invalid="true"]{border-color:var(--color-error)}
+.sh__nav .cta[disabled]{opacity:.7;cursor:progress}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.sh__done > p{margin:0;max-width:36ch;color:var(--mute)}
+.sh__done .cta{margin-top:10px}
+
+
+/* glass fallback (PRD 13) */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .nav__in{background:var(--k)}
+  .who button{background:rgba(11,11,12,.6)}
+}
+
+@media (prefers-reduced-motion:reduce){.hero__media,.hero__in .t-hero,.hero__sub,.hero__cta{animation:none}}
+
+/* the highlight band (PRD 8.6): tight, 25–79% of the line. In the prototype the SplitText mask
+   clipped a taller band down to this; the mask now has room for accents, so the band is tight itself */
+.lt .y,.wt .y,.first .y{background:linear-gradient(180deg,transparent 0 25%,var(--y) 25% 79%,transparent 79%)}
+/* "book." is a button (it opens the booking): the footer's button reset must not flatten its type */
+.tpf button.tpf-big{font-family:var(--f-d);font-weight:900;font-stretch:50%;font-size:max(30px,5.4cqmin);line-height:.9;color:var(--color-white)}
+
+/* PRD 0.4.2(9): no text under 12px. The prototype had 10–11.5px in these spots; raised to 12px */
+.bq__meta,.ba__from b,.board th small,.board thead th:first-child,.board td.none span{font-size:12px}
+@media (max-width:999px){.strack li{font-size:12px}}
+/* Professor: his name on its own line in a yellow box, the belt under the title */
+.pf__h1,.pf__box{display:block}
+.pf__box{width:fit-content;margin-top:.1em;padding:.1em .14em .02em;border-radius:12px;background:var(--y);color:var(--k)}
+.pf__belt{width:clamp(150px,calc(13vw / var(--zs, 1)),200px);height:clamp(22px,calc(1.9vw / var(--zs, 1)),28px);margin-top:4px}
+.pf__belt em{gap:4px;padding:0 7px}
+.pf__belt em s{width:5px;height:70%}
+.tpf-toast,.tpf-bub{font-size:max(12px,1.6cqmin)}
+.tpf-credit{font-size:max(12px,1.4cqmin)}
+
+/* IV · short screens (1366×768 and below): the two-line worry needs a step smaller type to stay under the title rule */
+@media (min-width:768px) and (max-height:820px){.bq__t{font-size:clamp(34px,min(calc(6.3vw / var(--zs, 1)),calc(7.6vh / var(--zs, 1))),104px)}}
+
+/* ── finalizer, FASE 2: touch and fit (desktop composition unchanged) ── */
+/* the vertical labels: the line box holds the glyphs (no overflow), same centre */
+.wp__v{line-height:1.6}
+/* the footer's "call or text" bubble: the clip moves onto the text, the link keeps its size */
+.tpf-bub{overflow:visible}
+.tpf-bub b{display:inline-block;overflow:hidden;vertical-align:middle}
+@media (hover:none){.tpf-bub{padding:0 .8em}.tpf-bub b{max-width:8em;opacity:1}}
+/* the seven day tabs share the width on the narrowest phones */
+@media (max-width:400px){.daytabs button{min-width:0;font-size:13px}}
+/* 44px targets on phones and tablets (PRD 12) */
+@media (max-width:1023px){
+  .nav__logo{display:flex;align-items:center;min-height:44px}
+  .pill{min-height:44px}
+  .tpf-ib{width:max(44px,1.9em);height:max(44px,1.9em);margin:calc((1.9em - max(44px,1.9em)) / 2 - .3em)}
+  .tpf-logo,.tpf-status,.tpf-mail{min-height:44px}
+  .tpf-mail{min-width:44px;justify-content:center}
+  .tpf-big,.tpf-handle,.tpf-foot a,.tpf-word{display:inline-flex;align-items:center;min-height:44px}
+  .tpf-bub{min-height:44px;height:auto}
+  .tpf-col ul{gap:0}
+  .tpf-col li a{display:inline-flex;align-items:center;min-height:44px}
+  .call{min-height:44px}
+}
+@media (max-width:1023px){
+  .tpf-big{min-width:44px;justify-content:center}
+  .tpf-col li a{min-width:44px}
+  .tpf-col.r li a{justify-content:flex-end}
+}
+/* 320–360px: the tabs take two rows, the CTA tightens so the whole label fits */
+@media (max-width:360px){
+  .daytabs{flex-wrap:wrap}
+  .daytabs button{flex:1 0 calc(25% - 4px)}
+  .cta{font-size:14px;gap:10px;padding-left:16px}
+  .hero__in{padding-left:16px;padding-right:16px}
+}
+@media (max-width:380px){.daytabs{flex-wrap:wrap}.daytabs button{flex:1 0 calc(25% - 4px)}}
+@media (max-width:1023px){.tpf .tpf-big{min-width:46px;min-height:46px}.tpf .tpf-status{min-height:46px}.tpf .tpf-pill{height:max(46px,5.8cqmin)}}
+/* Schedule: the day header row yellow with black letters (Adryan, 10/11) */
+.board thead th,.board thead th:first-child{background:var(--y);color:var(--k);border-right-color:rgba(11,11,12,.12)}
+.board thead th small{color:rgba(11,11,12,.62)}
+.board thead th.today small{background:var(--k);color:var(--y)}
+/* Reviews: the active card black, only the quote box yellow (Adryan, 10/11) */
+.rc.on{background:var(--k);color:var(--color-white);box-shadow:0 40px 70px -36px rgba(11,11,12,.7)}
+.rc.on .rc__q{background:var(--y);color:var(--k)}
+.rc.on .rc__av{background:var(--k-4);color:var(--color-white)}
+.rc.on .rc__who{border-top-color:rgba(255,255,255,.14)}
+.rc.on .rc__who small{color:var(--mute-d)}
+/* Find us (Adryan, 10/11): title centred, the map as the section's background like the CG North
+   Lakeland footer, fading into the ink above and into the footer below; the cards sit on it */
+.find{overflow:hidden;isolation:isolate}
+.find .head,.find .store,.find .visit{position:relative;z-index:1}
+/* the footer's paper grain over the bottom, so the map runs into the footer with no seam */
+.find::after{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;z-index:0;pointer-events:none;background-image:var(--grain,none);background-size:160px;opacity:.45;
+  -webkit-mask-image:linear-gradient(0deg,var(--color-black) 30%,transparent);mask-image:linear-gradient(0deg,var(--color-black) 30%,transparent)}
+.find .head .lead{max-width:44ch}
+.find .map{position:absolute;inset:0;z-index:0;min-height:0;border-radius:0;background:var(--k)}
+.find .map__frame{left:-12%;top:-160px;width:124%;height:calc(100% + 160px);pointer-events:none}
+.map__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(180deg,var(--k) 0%,rgba(11,11,12,.6) 24%,rgba(11,11,12,0) 50%),
+  linear-gradient(0deg,var(--color-sheet) 0%,color-mix(in srgb,var(--color-sheet) 55%,transparent) 18%,transparent 42%),
+  linear-gradient(90deg,rgba(11,11,12,.7) 0%,rgba(11,11,12,0) 12%,rgba(11,11,12,0) 88%,rgba(11,11,12,.7) 100%),
+  radial-gradient(ellipse at 50% 46%,rgba(11,11,12,0) 0%,rgba(11,11,12,.35) 72%)}
+.map__mark{position:absolute;left:50%;top:calc(50% - 80px);width:0;height:0;z-index:2}
+.map__mark .map__pin,.map__mark .map__pulse{left:0;top:0}
+.find__grid{gap:16px}
+.store{box-shadow:0 40px 80px -40px rgba(0,0,0,.9)}
+.visit{display:grid;gap:12px;align-content:start;padding:22px 22px 6px;border-radius:26px;background:var(--k);box-shadow:inset 0 0 0 1px var(--line-d),0 40px 80px -40px rgba(0,0,0,.9)}
+.visit b{font-family:var(--f-d);font-weight:900;font-stretch:50%;text-transform:uppercase;font-size:28px;line-height:.9}
+.visit p{margin:0;font-size:14.5px;color:var(--mute-d)}
+.visit .contacts{margin:6px -4px 0;padding:0 4px;border-radius:0;background:none;box-shadow:none;border-top:1px solid var(--line-d)}
+@media (min-width:1000px){
+  .find{padding-bottom:clamp(90px,calc(13vh / var(--zs, 1)),150px)}
+  .find__grid{grid-template-columns:minmax(0,380px) minmax(0,1fr) minmax(0,380px);align-items:end;min-height:clamp(440px,calc(56vh / var(--zs, 1)),560px)}
+  .find__win{grid-column:2;grid-row:1}
+  .store{grid-column:1;grid-row:1}
+  .visit{grid-column:3;grid-row:1}
+}
+@media (max-width:999px){
+  .find__win{position:relative;width:100vw;margin-left:calc(50% - calc(50vw / var(--zs, 1)));height:380px}
+  .find .map__frame{top:-120px;height:calc(100% + 120px)}
+  .find .map__mark{top:calc(50% - 60px)}
+  .map__shade{background:
+    linear-gradient(180deg,var(--k) 0%,rgba(11,11,12,0) 22%),
+    linear-gradient(0deg,var(--color-sheet) 0%,transparent 26%)}
+  .find{background:linear-gradient(180deg,var(--k) 0,var(--k) 380px,var(--color-sheet) 560px)}
+  .visit{order:2}.store{order:3}
+}
+/* Nav takes the section's colour (Adryan, 10/11): white over white sections, black over dark ones */
+.nav__in{transition:background-color .35s ease,box-shadow .35s ease,color .35s ease}
+.nav__logo{position:relative;display:grid}
+.nav__lg{grid-area:1/1;transition:opacity .35s ease}
+.nav__lg--k{opacity:0}
+.nav.is-light .nav__lg--w{opacity:0}
+.nav.is-light .nav__lg--k{opacity:1}
+.nav.is-light .nav__in{background:rgba(255,255,255,.9);color:var(--k);box-shadow:0 0 0 1px rgba(11,11,12,.08),0 18px 40px -24px rgba(11,11,12,.45)}
+.nav.is-light .nav__links a{color:rgba(11,11,12,.72)}
+.nav.is-light .nav__links a:hover{background:rgba(11,11,12,.06);color:var(--k)}
+.nav.is-light .nav__tel{box-shadow:inset 0 0 0 1.5px rgba(11,11,12,.2)}
+.nav.is-light .nav__tel:hover{background:rgba(11,11,12,.06)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav.is-light .nav__in{background:var(--color-white)}}
+/* First class: the step card's shadow runs past the section's bottom edge and under Schedule; clip
+   only sideways and paint the section above the next one (Adryan, 10/11) */
+.first{overflow:visible;overflow-x:clip;z-index:1}
+/* Pricing: the card's shadow, softer (Adryan, 10/11) */
+.mcard__f{box-shadow:0 34px 60px -34px rgba(11,11,12,.45),0 10px 24px -14px rgba(11,11,12,.25),inset 0 0 0 1px rgba(255,255,255,.12)}
+.mcard__b{box-shadow:0 34px 60px -34px rgba(11,11,12,.45),0 10px 24px -14px rgba(11,11,12,.25)}
+/* Final CTA: the photo fades into the ink Find us opens with, so the two run as one (Adryan, 10/11) */
+.fin::before{background:linear-gradient(180deg,rgba(11,11,12,.55),rgba(11,11,12,.25) 35%,rgba(11,11,12,.92) 78%,var(--k) 100%)}
+/* Final CTA: the photo framed lower, less ceiling (Adryan, 10/11) */
+.fin__bg img{object-position:50% 100%;transform:scale(1.22);transform-origin:50% 92%}
+/* Hero = the team photo, final CTA = the class photo (swapped, Adryan 10/11): framed on the people */
+.hero__media img{object-position:50% 75%}
+@media (max-width:899px){.hero__media img{object-position:62% 70%}}
+
+
+/* CTA wolf: centred in its circle by the ink (it sat 8px low: 17px above, 9px below), Adryan 10/11 */
+.cta__w svg{transform:translate(-1.5px,-2.2px) rotate(14deg)}
+.cta:hover .cta__w svg,.cta:focus-visible .cta__w svg{transform:translate(-1.5px,-5px) rotate(-6deg)}
+/* ── 10/11, Adryan ──────────────────────────────────────────────────────────────────────────────
+   Red CTA (Professor, Adults): the belt red, white letters, the wolf yellow on ink */
+.cta--r{background:var(--color-belt-red);color:var(--color-white);box-shadow:0 14px 30px -16px rgba(193,18,31,.7)}
+.cta--r:hover{background:color-mix(in srgb,var(--color-belt-red) 88%,var(--color-white))}
+.cta--r .cta__w{background:color-mix(in srgb,var(--color-belt-red) 72%,var(--color-black));color:var(--color-white);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+/* Every booking button calls for the click: a ring that pulses out of it and a sheen that crosses
+   it now and then. Not inside the booking dialog; off under reduced motion */
+.cta{--pulse:var(--y);--shine:rgba(255,255,255,.55);background-image:linear-gradient(110deg,transparent 38%,var(--shine) 50%,transparent 62%);background-size:300% 100%;background-repeat:no-repeat;background-position:130% 0;animation:cta-shine 5.2s ease-in-out 1.2s infinite}
+.cta--k{--pulse:var(--k);--shine:rgba(255,255,255,.16)}
+.cta--r{--pulse:var(--color-belt-red);--shine:rgba(255,255,255,.28)}
+.cta::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:cta-pulse 2.6s cubic-bezier(.2,.6,.3,1) infinite}
+.cta:hover::after,.cta:focus-visible::after,.sh__nav .cta::after{animation:none}
+.sh__nav .cta{animation:none;background-image:none}
+@keyframes cta-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--pulse) 55%,transparent)}75%,100%{box-shadow:0 0 0 16px color-mix(in srgb,var(--pulse) 0%,transparent)}}
+@keyframes cta-shine{0%{background-position:130% 0}22%,100%{background-position:-30% 0}}
+.still .cta,.still .cta::after{animation:none}
+@media (prefers-reduced-motion:reduce){.cta,.cta::after{animation:none}}
+/* Professor: five wolves in a row, the centre one the size it was */
+.pf__wolves{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;gap:clamp(8px,calc(1vw / var(--zs, 1)),16px)}
+.pf .pf__wolf{position:static;inset:auto;flex:none;margin:0;height:90%;width:auto;max-width:none;aspect-ratio:240/198}
+/* Hero: the photo layer (animated, its own compositor layer) sometimes painted past the card's
+   rounded clip and the corners came out square (Adryan, 10/11). Each layer carries the card's radius
+   itself (inherit, so it follows the scroll tween to 0) */
+.hero__media,.hero__media img,.hero__card::before{border-radius:inherit}
+.hero__card{-webkit-mask-image:-webkit-radial-gradient(white,black)}
+/* Hero H1: the second half on the yellow band of the page's titles, black letters (Adryan, 10/11) */
+.hero .y{color:var(--k);background:linear-gradient(180deg,transparent 0 25%,var(--y) 25% 79%,transparent 79%);padding:0 .08em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* Professor wolves: no gap, so the second ones on each side peek in at the edges */
+.pf__wolves{gap:0}
+
+
+/* First class: one button, red, in column 2 of the title row; none inside the step cards (Adryan, 10/11) */
+.first__cta{display:flex;align-items:flex-end;justify-content:flex-start}
+@media (min-width:1000px){.first__top{align-items:end}.first__cta{justify-content:flex-end}}
+/* Professor (desktop): Fred ~20% bigger, from the top of the title down to the panel's foot, so his
+   head lines up with "Meet Professor"; he still climbs out of the panel on scroll */
+/* Fred is a child of the card (not of the stage), anchored to its foot */
+.pf__me{position:absolute;z-index:1;left:0;right:0;bottom:14px;margin:0 auto;width:fit-content;height:420px}
+.pf__me img{height:100%;max-height:none}
+@media (min-width:900px){.pf__me{height:auto;top:calc(clamp(28px,calc(3.4vw / var(--zs, 1)),48px) + 34px)}}
+/* First class cards without the button (Adryan, 10/11): the step track fills the footer and the card
+   is as tall as its content, so nothing is left blank */
+@media (min-width:1000px){
+  .scard{min-height:0}
+  .scard__foot{flex-wrap:nowrap}
+  .strack{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .strack li{padding-right:16px}
+}
+/* Pricing: the red booking button under the plans (Adryan, 10/11) */
+.inv__cta{margin-top:22px}
+/* Professor: the panel black instead of yellow, the wolves grey (Adryan, 10/11). A soft light behind
+   Fred so his black rash guard still reads against it */
+.pf__panel{background:radial-gradient(55% 85% at 50% 100%,var(--color-ink-4),var(--color-ink-2) 62%,var(--color-ink));box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.pf .pf__wolf{color:rgba(255,255,255,.13)}
+.pf__panel::after{content:"";position:absolute;left:50%;bottom:0;width:min(560px,60%);height:95%;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,255,255,.1),transparent)}
+/* Professor: the card's shadow ran past the section's bottom edge and under "Three reasons"; clip only
+   sideways and paint the section above the next one, as in First class (Adryan, 10/11) */
+.pf{overflow:visible;overflow-x:clip;z-index:1}
+
+
+
+
+
+
+
+
+
+/* ───── Parents · the backpack card (Adryan, 10/11) ─────────────────────────────────────────────
+   A black card the width of the Professor's, the same way as Fred: grey wolves behind, the backpack
+   coming up out of its top and its foot cut by the card's bottom edge (it stands, it doesn't float).
+   The notes sit outside the card, on the white, either side of the bag's top, hand-lettered with an
+   arrow drawn to the bag. The button sits on the card's edge. Grid: row 1 the notes and the bag's top,
+   row 2 the card; --W the bag's width, --H the card's height. */
+.pk{--W:clamp(440px,calc(42vw / var(--zs, 1)),600px);--H:calc(var(--W) * .5);position:relative;display:grid;
+  grid-template-columns:minmax(0,1fr) calc(var(--W) * .86) minmax(0,1fr);grid-template-rows:minmax(calc(var(--W) * .32),auto) var(--H);
+  column-gap:clamp(16px,calc(2vw / var(--zs, 1)),32px);margin-top:clamp(24px,calc(4vh / var(--zs, 1)),44px)}
+.pk__panel{grid-column:1/-1;grid-row:2;position:relative;border-radius:28px;overflow:hidden;
+  background:radial-gradient(55% 85% at 50% 100%,var(--color-ink-4),var(--color-ink-2) 62%,var(--color-ink));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 60px 100px -70px rgba(11,11,12,.6)}
+.pk__panel::after{content:"";position:absolute;left:50%;bottom:0;width:min(640px,56%);height:100%;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,255,255,.11),transparent)}
+.pk__wolves{position:absolute;inset:0;display:flex;justify-content:center;align-items:center}
+.pk__wolf{flex:none;height:88%;width:auto;aspect-ratio:240/198;color:rgba(255,255,255,.1)}
+/* the bag spans both rows, anchored to the card's foot and clipped there only */
+.pk__bag{grid-column:1/-1;grid-row:1/3;position:relative;z-index:1;pointer-events:none;clip-path:inset(-400px -400px 0 -400px)}
+.pk__bag .pack{position:absolute;left:0;right:0;bottom:calc(var(--W) * -.15);margin:0 auto;width:var(--W);max-width:none;height:auto;
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 26px 34px rgba(0,0,0,.45))}
+/* the notes: on the white, in row 1, left and right of the bag */
+.pk__notes{display:contents}
+.pk__col{grid-row:1;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;gap:24px;min-width:0;padding-bottom:30px}
+.pk__col--l{grid-column:1;align-items:flex-end;text-align:right}
+.pk__col--r{grid-column:3;align-items:flex-start}
+.pk__note{position:relative;max-width:300px;color:var(--k)}
+.pk__note b{display:block;margin-bottom:6px;font-family:var(--f-m);font-weight:400;font-size:clamp(22px,calc(1.75vw / var(--zs, 1)),28px);line-height:1.08;color:var(--k)}
+.pk__note p{margin:0;font-size:14.5px;line-height:1.55;color:var(--mute)}
+.pk__arrow{position:absolute;top:10%;width:clamp(58px,calc(5.6vw / var(--zs, 1)),88px);height:auto;overflow:visible;fill:none;stroke:var(--k);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pk__arrow path{stroke-dasharray:1;stroke-dashoffset:0}
+.pk__arrow--right{left:calc(100% + 4px)}
+.pk__arrow--left{right:calc(100% + 4px);transform:scaleX(-1)}
+.par__cta{position:relative;z-index:3;margin-top:-29px}
+.still .pk__arrow path{stroke-dashoffset:0}
+/* phone: the bag and the card first, the notes below them */
+@media (max-width:999px){
+  .pk{--W:min(calc(84vw / var(--zs, 1)),440px);--H:calc(var(--W) * .56);grid-template-columns:1fr;grid-template-rows:calc(var(--W) * .3) var(--H) auto auto;column-gap:0}
+  .pk__panel{border-radius:22px}
+  .pk__wolf{height:80%}
+  .pk__col,.pk__col--l,.pk__col--r{grid-column:1;align-items:stretch;text-align:left;gap:24px;padding:0}
+  .pk__col--l{grid-row:3;padding-top:32px}
+  .pk__col--r{grid-row:4;padding-top:24px}
+  .pk__note{max-width:none;padding-left:16px;border-left:3px solid var(--y)}
+  .pk__arrow{display:none}
+  .par__cta{margin-top:30px}
+}
+/* Professor: the text in Adryan's four lines on desktop (10/11) */
+@media (min-width:900px){.pf__body{max-width:none}.pf__body span{display:block;white-space:nowrap}}
+@media (max-width:1023px){a.call{min-height:46px}}
+/* Parents notes on desktop: the title only, in Adryan's two lines, yellow arrows (10/11) */
+@media (min-width:1000px){
+  .pk__note b{margin:0}
+  .pk__note b span{display:block;white-space:nowrap}
+  .pk__note p{display:none}
+  .pk__col{gap:36px}
+  .pk__arrow{stroke:var(--y);stroke-width:2.8;top:22%}
+}
+/* Parents: more room between the title block and the backpack (Adryan, 10/11) */
+.pk{margin-top:clamp(64px,calc(10vh / var(--zs, 1)),120px)}
+@media (max-width:999px){.pk{margin-top:48px}}
+.par{padding-bottom:clamp(24px,calc(3vh / var(--zs, 1)),40px)}
+/* Parents: lower still, and the card's shadow paints over the next section instead of being cut (10/11) */
+.pk{margin-top:clamp(110px,calc(16vh / var(--zs, 1)),170px)}
+@media (max-width:999px){.pk{margin-top:64px}}
+.par{z-index:1;overflow:visible;overflow-x:clip}
+/* Parents (desktop): the wide photo, the bag with the white belt across (Adryan, 10/11). The bag keeps
+   its size (about .7 of --W), the belt lies inside the card, the bag's foot is cut by the card's edge */
+@media (min-width:1000px){
+  .pk{grid-template-rows:minmax(calc(var(--W) * .38),auto) var(--H)}
+  .pk__bag .pack{width:calc(var(--W) * 2.2);bottom:calc(var(--W) * -.1)}
+}
+/* the bag sunk deeper into the card's foot so it stands in it, and the card's edges (rounded) cut the belt too */
+@media (min-width:1000px){
+  .pk__bag{clip-path:inset(-400px 0 0 0 round 0 0 28px 28px)}
+  .pk__bag .pack{width:calc(var(--W) * 2.1);bottom:calc(var(--W) * -.2)}
+}
+@media (min-width:1000px){
+  .pk{grid-template-rows:minmax(calc(var(--W) * .27),auto) var(--H)}
+  .pk__bag .pack{bottom:calc(var(--W) * -.14)}
+}
+@media (min-width:1000px){.pk__bag .pack{bottom:calc(var(--W) * -.12)}}
+/* ── big screens (FIM 10/11): the content column and the hero text scale as one piece by --z
+   (index.html head script: min(width/1536, height/864), from 1600px), so 2560×1080 and 3440×1440 keep
+   the desktop composition, only bigger. Every vw/vh inside is divided by --zs, so heights and
+   full-bleed tricks come out the same size on screen. ── */
+@media (min-width:1600px){.shell,.hero__in{zoom:var(--z,1);--zs:var(--z,1)}}
+@media (min-width:1600px){.wi,.walk__title,.walk__bar{zoom:var(--z,1);--zs:var(--z,1)}}
+@media (min-width:1600px){.nav__in{zoom:var(--z,1);--zs:var(--z,1)}}
+/* ── mobile fixes (FIM 10/11) ── */
+@media (max-width:899px){
+  /* the full-screen sections stop forcing 100svh on a phone: no blank band under Programs */
+  .fit{min-height:0}
+  /* walk-in rail: snapping aligned the first photo to the screen edge; snap to the gutter instead */
+  .walk__rail{scroll-padding-inline:var(--gl) var(--gr)}
+  .walk__flat{padding-bottom:36px}
+}
+@media (max-width:767px){
+  /* reviews: the side fade only at the very edges, so the active card is never faded */
+  .rv{-webkit-mask-image:linear-gradient(90deg,transparent 0,var(--color-black) 5%,var(--color-black) 95%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,var(--color-black) 5%,var(--color-black) 95%,transparent 100%)}
+}
+/* reviews: the arrows above the tilted side cards, which reached over them on short phones */
+.rv__nav{z-index:12}
+@media (max-width:899px){
+  /* walk-in rail: its side padding was lost to a list reset; the first photo sits on the gutter */
+  .walk__flat .walk__rail{padding:0 var(--gr) 0 var(--gl)}
+  /* adults: a tall exchange overflows downward, never up over the title; type scales with the
+     screen's height too, so the question and the answer fit a short phone */
+  .dq__ex{align-content:safe center}
+  .dq__in{padding-top:calc(86px + env(safe-area-inset-top,0px))}
+  .bq__t{font-size:clamp(26px,min(10.5vw,5.6vh),54px)}
+  .ba p{font-size:clamp(14px,2.3vh,16.5px)}
+  /* first class: the pinned scene fits the screen (it was 745px tall on a 568px phone) */
+  .first__pin{padding-top:calc(78px + env(safe-area-inset-top,0px))}
+  .first .belt{height:48px}
+}
+/* short phones: the scene drops what the bottom bar already gives (its button), then the step pills */
+@media (max-width:899px) and (max-height:760px){.first__cta{display:none}.first__top{margin-bottom:14px}}
+@media (max-width:899px) and (max-height:620px){.first .scard__foot{display:none}.first .belt{height:36px}.dq__title{font-size:26px}}
+/* adults on short phones: the scene's own button would land on the last answer; the bottom bar takes over */
+@media (max-width:899px) and (max-height:760px){.dq .dq__end,.dq.is-live .dq__end{display:none}}
+@media (max-width:899px) and (max-height:620px){.bq__t{font-size:24px}.ba p{font-size:13.5px;line-height:1.42}.ba{padding:14px 16px}.bq{padding:14px 18px 10px}}
+/* adults on phones: the typing dots go (they took ~70px with their gaps), the exchange sits closer
+   to the title and the type follows the screen's height, so even the longest answer fits */
+@media (max-width:899px){
+  .dq .typing{display:none}
+  .dq__ex{padding-top:14px;gap:12px}
+  .bq__t{font-size:clamp(24px,min(10vw,4.9vh),54px)}
+  .ba p{font-size:clamp(13.5px,2.05vh,16.5px);line-height:1.45}
+  .ba{padding:14px 16px}
+}
+@media (max-width:899px) and (max-height:620px){
+  .ba .ba__from{display:none}
+  .ba p{font-size:12.5px;line-height:1.42}
+  .bq__t{font-size:22px}
+  .dq__top{padding-bottom:12px;gap:8px}
+  .dq__in{padding-top:calc(78px + env(safe-area-inset-top,0px))}
+  .dq__ex{padding-top:10px;gap:10px}
+}
+/* ═════ mobile pass (Adryan, 10/11): everything below is ≤899px only ═════ */
+@media (max-width:899px){
+  /* hero: the photo is a band on top, the text below it on the ink, never over the people */
+  .hero__card{flex-direction:column;align-items:stretch;min-height:0}
+  .hero__card::before{display:none}
+  .hero__media{position:relative;inset:auto;flex:none;height:clamp(230px,40svh,400px);border-radius:0}
+  .hero__media img{transform:none;object-position:50% 62%;border-radius:0}
+  .hero__media::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(180deg,transparent,var(--k))}
+  .hero__in{padding-top:6px;padding-bottom:26px}
+  @keyframes lb-zoom-m{from{transform:scale(1.08)}to{transform:none}}
+  .hero__media{animation-name:lb-zoom-m}
+}
+@media (max-width:899px){
+  /* programs: a swipe carousel, the cards still climb like stairs (62 → 100% of the row) */
+  .pg__wrap{margin-inline:calc(-1 * var(--gl)) calc(-1 * var(--gr))}
+  .stairs{display:flex;align-items:flex-end;gap:12px;height:clamp(360px,58svh,440px);overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;scroll-padding-inline:var(--gl) var(--gr);padding:0 var(--gr) 4px var(--gl);scrollbar-width:none}
+  .stairs::-webkit-scrollbar{display:none}
+  .step,.step:nth-child(n){flex:none;width:min(68vw,300px);scroll-snap-align:start}
+  .step:nth-child(1){height:70%}.step:nth-child(2){height:80%}.step:nth-child(3){height:90%}.step:nth-child(4){height:100%}
+  .pc{min-height:0}
+}
+@media (max-width:899px){
+  /* adults: the stacked chat (replaces the pinned scene and the short-phone squeezing above) */
+  .dq{height:auto}
+  .dq__stage{position:relative;height:auto;overflow:visible}
+  .dq__in{display:block;height:auto;padding-top:calc(76px + env(safe-area-inset-top,0px));padding-bottom:56px}
+  .dq__top{padding-bottom:18px}
+  .dq__prog{display:none}
+  .dq__chat{margin-top:8px}
+  .dq__ex,.dq:not(.is-live) .dq__ex:not(:first-child){position:relative;inset:auto;visibility:visible;padding:22px 0 0;gap:12px;align-content:start}
+  .dq .typing{display:none}
+  .bq__t{font-size:clamp(28px,9vw,44px)}
+  .ba p,.ba p{font-size:15.5px;line-height:1.5}
+  .ba .ba__from{display:flex}
+  .dq .dq__end,.dq.is-live .dq__end{display:flex;opacity:1;margin-top:30px}
+  .dq__title{font-size:clamp(28px,8.4vw,40px)}
+}
+@media (max-width:899px){
+  /* walk-in: a plain swipe carousel, cards a little narrower than the screen so the next one peeks */
+  .walk__flat .walk__rail{gap:12px;overscroll-behavior-x:contain}
+  .walk__rail > li{width:min(78vw,320px)}
+  .walk__rail figure{margin:0}
+  .walk__rail img,.still .walk__rail img{display:block;width:100%!important;height:min(104vw,400px)!important;object-fit:cover}
+  .walk__rail .wf,.still .walk__rail .wf{width:100%;height:min(104vw,400px)}
+  .walk__rail figcaption{margin-top:8px;font-size:13px;font-weight:600;color:var(--mute)}
+}
+/* first class on phones: the four steps as cards; the desktop card stays for ≥900 */
+.fcm{display:none}
+@media (max-width:899px){
+  .first__pin{min-height:0;display:block;padding-bottom:56px}
+  .first .scard{display:none}
+  .first .first__cta{display:flex}
+  .first .belt{position:sticky;top:calc(80px + env(safe-area-inset-top,0px));z-index:3;height:44px;margin-bottom:18px}
+  .fcm{display:grid;gap:14px;list-style:none;margin:0;padding:0}
+  .fcm__c{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start;padding:22px 20px;border-radius:24px}
+  .fcm__c[data-c="y"]{background:var(--y);color:var(--k)}
+  .fcm__c[data-c="k"]{background:var(--k);color:var(--color-white)}
+  .fcm__n{font-family:var(--f-d);font-weight:900;font-stretch:50%;font-size:72px;line-height:.8}
+  .fcm__c[data-c="k"] .fcm__n{color:var(--y)}
+  .fcm__c h3{margin:0;font-size:clamp(26px,7.4vw,34px)}
+  .fcm__c p{margin:10px 0 0;font-size:15.5px;line-height:1.5;opacity:.82}
+}
+@media (max-width:899px){
+  /* pricing: the member card above the plans, so tapping a plan shows it flip */
+  .inv__grid{gap:0}
+  .inv__l{display:contents}
+  .inv__l > .tag{order:1}
+  .inv__h{order:2;margin-bottom:22px}
+  .card3d{order:3;width:min(100%,420px);margin-bottom:24px}
+  .plans{order:4;margin-top:0}
+  .inv__note{order:5}
+  .inv__cta{order:6}
+  /* reviews: no side fade on phones */
+  .rv{-webkit-mask-image:none;mask-image:none}
+}
+@media (max-width:899px){
+  /* footer on phones: the top row clears the nav, no small logo (the big one is below), the
+     address and the call bubble stacked and centred inside the screen, the logo inside it too */
+  .tpf-top{top:max(12.5%,112px)}
+  .tpf-logo{display:none}
+  .tpf-news{top:max(20%,150px)}
+  .tpf-status{top:calc(max(20%,150px) + 112px)}
+  .tpf-col{top:calc(max(20%,150px) + 150px)}
+  .tpf-brand{width:min(90cqw,360px);justify-items:center}
+  .tpf-brand-top{flex-direction:column;gap:8px;padding:0;text-align:center}
+  .tpf-eye{white-space:normal;font-size:13px}
+  .tpf-word img{height:auto;width:min(62cqw,240px)}
+}
+/* short phones: the columns keep only their titles and BOOK. / CALL. (the links are in the nav) */
+@media (max-width:899px) and (max-height:760px){.tpf-col ul{display:none}.tpf-col h3{margin-bottom:0}}
+@media (max-width:899px){#programs{overflow-x:clip}}
+@media (max-width:1023px){.tpf .tpf-mail{min-width:46px;min-height:46px}}

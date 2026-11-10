@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Lobo Jiu-Jitsu | Brazilian Jiu-Jitsu for Kids, Teens and Adults in Aurora, IL</title>
+    <meta name="description" content="Brazilian Jiu-Jitsu in Aurora, Illinois. Classes for kids from age 4, teens and adults, taught by Professor Fred Lobo, a 3rd-degree black belt. Book your free trial class." />
+    <meta name="theme-color" content="#0B0B0C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+    <link rel="preload" href="/fonts/saira-condensed-900.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- reduced motion is decided before the first paint: html.still = the layout without scenes (PRD 12) -->
+    <script>try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('still')}catch(e){}</script>
+    <!-- /v2: the dark test theme (src/styles/v2.css), same page, decided before the first paint -->
+    <!-- big screens: the content column scales as one piece, so 2560 and 3440 read like the desktop
+         (1536×864) only bigger; set before the first paint, kept on resize (app.css: .shell zoom) -->
+    <script>(function(){var r=document.documentElement;function f(){var w=innerWidth,h=innerHeight;r.style.setProperty('--z',w<1600?1:Math.max(1,Math.min(w/1536,h/864)).toFixed(3))}f();addEventListener('resize',f)})()</script>
+    <script>var p=location.pathname;if(p==='/v2'||p.indexOf('/v2/')===0)document.documentElement.classList.add('v2')</script>
+    <!--lobo:head-->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

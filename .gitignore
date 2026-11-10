@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+# Build / output
+dist/
+dist-ssr/
+dist-server/
+build/
+*.local
+# Env & secrets (NUNCA versionar)
+.env
+.env.*
+!.env.example
+.vercel
+# Claude / ferramentas de IA
+.claude/
+.cursor/
+.aider*
+# Branding: assets BRUTOS de marca (logos editáveis, fontes licenciadas, PSDs)
+brand/
+/brand-assets/
+# QA local
+.responsive-check/
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+# Cache
+.cache/
+.temp/
+.eslintcache
+coverage/
+# QA screenshots (regenerate with scripts/shots.mjs / compare.mjs)
+public/memory/prints/
