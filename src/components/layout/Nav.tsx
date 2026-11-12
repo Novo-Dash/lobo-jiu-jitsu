@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NAV, SITE } from '../../data/site'
+import { PROMO } from '../../data/promo'
+import { usePromo } from '../../lib/promo'
 import { Icon } from '../ui/Icon'
 
 /**
@@ -11,10 +13,13 @@ import { Icon } from '../ui/Icon'
 export function Nav() {
   const ref = useRef<HTMLElement>(null)
   const [light, setLight] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const promo = usePromo()
   useEffect(() => {
     let raf = 0
     const read = () => {
       raf = 0
+      setScrolled(scrollY > 4)
       const nav = ref.current!, r = nav.querySelector('.nav__in')!.getBoundingClientRect()
       const under = document.elementsFromPoint(innerWidth / 2, r.top + r.height / 2).find((e) => !nav.contains(e))
       setLight(!document.documentElement.classList.contains('v2') && !!under && !under.closest('[data-nav="dark"]'))
@@ -27,7 +32,17 @@ export function Nav() {
   }, [])
 
   return (
-    <header className={`nav${light ? ' is-light' : ''}`} id="nav" ref={ref}>
+    <header className={`nav${light ? ' is-light' : ''}${promo ? ' has-bn' : ''}${scrolled ? ' is-scrolled' : ''}`} id="nav" ref={ref}>
+      {/* Black November (12/11): a bar above the pill while the page is at the top; it slides away with
+          the first scroll, so nothing stays fixed but the pill */}
+      {promo ? (
+        <a className="bn-bar" href="#pricing">
+          <b>{PROMO.name}</b>
+          <span className="bn-bar__l">{PROMO.bar.long}</span>
+          <span className="bn-bar__s">{PROMO.bar.short}</span>
+          <u>{PROMO.bar.link}<Icon name="arrow" /></u>
+        </a>
+      ) : null}
       <div className="nav__in">
         <a className="nav__logo" href="#top" aria-label={NAV.homeLabel}>
           <img className="nav__lg nav__lg--w" src={SITE.logo.src} width={SITE.logo.w} height={SITE.logo.h} alt={SITE.logo.alt} />

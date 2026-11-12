@@ -1,9 +1,11 @@
 import { useRef } from 'react'
 import { FINAL } from '../../data/finalCta'
+import { PROMO } from '../../data/promo'
 import { SITE } from '../../data/site'
 import { gsap, lines, rise, useGSAP } from '../../lib/gsap'
 import { motionOK } from '../../lib/motion'
 import { audienceOf } from '../../lib/audience'
+import { usePromo } from '../../lib/promo'
 import { useBooking } from '../../nd'
 import { Cta } from '../ui/Cta'
 import { TitleText } from '../ui/Highlight'
@@ -17,11 +19,12 @@ import { Photo } from '../ui/Photo'
 export function FinalCta() {
   const root = useRef<HTMLElement>(null)
   const { open } = useBooking()
+  const promo = usePromo()
   useGSAP(() => {
     if (!motionOK()) return
     lines(root.current!.querySelector('h2')!)
     gsap.fromTo('.fin__bg img', { yPercent: -6, scale: 1.3 }, { yPercent: 4, scale: 1.22, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true } })
-    rise('.who button, .fin__row', root.current!, { start: 'top 35%', y: 20, stagger: 0.06 })
+    rise('.who button, .fin__row, .bn-fin', root.current!, { start: 'top 35%', y: 20, stagger: 0.06 })
   }, { scope: root })
 
   return (
@@ -39,6 +42,7 @@ export function FinalCta() {
           <Cta />
           <a className="call" href={SITE.phone.tel}><Icon name="phone" /><u>{SITE.phone.display}</u></a>
         </div>
+        {promo ? <p className="bn-fin"><b>{PROMO.name}</b> {PROMO.final}</p> : null}
       </div>
     </section>
   )

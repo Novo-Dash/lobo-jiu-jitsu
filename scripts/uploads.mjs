@@ -16,6 +16,9 @@ const UPLOADS = [
   { file: 'kids-bag.webp', name: 'bag', w: 1254, sm: 760, q: 70 },     // Parents backpack, the object of the section: ≤ 660 CSS px
   { file: 'kids-bag-wide.webp', name: 'bag_wide', w: 1866, sm: 1200, q: 70 }, // Parents desktop: the bag with the white belt across, in the card
   { file: 'fred-coach.webp', name: 'fred_coach', w: 812, sm: 440 }, // Professor cut-out, ≤ 640 CSS px tall
+  // Black November (12/11): the gi and the rash guard keyed out of the yellow panel of Lobo's campaign
+  // art (black-november-art.webp), shown ≤ 420 CSS px wide behind the member card
+  { file: 'bn-uniform.png', name: 'bn_uniform', w: 515, sm: 360, q: 86 },
 ]
 
 const sizes = {}

@@ -35,7 +35,7 @@ const localApi = (): Plugin => ({
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), localApi()],
-  define: { __SITE__: JSON.stringify(confirmed || vercelUrl), __PREVIEW__: JSON.stringify(!confirmed) },
+  define: { __SITE__: JSON.stringify(confirmed || vercelUrl), __PREVIEW__: JSON.stringify(!confirmed), __BUILT__: JSON.stringify(Date.now()) },
   server: { port: 5290, fs: { deny: ['reference/**', '.env', '.env.*'] } },
   preview: { port: 4173 },
   build: { sourcemap: !!process.env.SOURCEMAP },

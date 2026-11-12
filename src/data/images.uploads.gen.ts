@@ -14,5 +14,10 @@ export const UPLOADS = {
     "w": 812,
     "h": 1402,
     "sm": 440
+  },
+  "bn_uniform": {
+    "w": 515,
+    "h": 290,
+    "sm": 360
   }
 } as const
