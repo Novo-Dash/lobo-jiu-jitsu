@@ -13,6 +13,6 @@ export const ADULTS = {
     { q: 'I need to get in shape first.', a: '**Start first.** Fitness follows training, not the other way around.' },
     { q: "I don't know anything. I'll look silly.", a: 'Everyone on this mat had a first day, **Professor Fred included.** Beginner fundamentals are part of the program, and the professor guides you through them.' },
     { q: "I'm worried about the contact, and about getting hurt.", a: "Jiu-jitsu involves physical contact, and we won't promise anyone an injury-free path. What we do offer: step-by-step teaching that starts with the fundamentals, a professor who is on the mat, and a culture built on **respect and care for your training partner.**" },
-    { q: 'My schedule is packed.', a: '**11 adult classes a week:** 7:00 am (Mon & Thu), noon (Mon–Thu), 6:50 pm (Mon–Thu) and Saturday at 11:00 am. Two restrooms with showers, so you can train before or after work.' },
+    { q: 'My schedule is packed.', a: '**11 adult classes a week:** 7:00 am (Wed & Fri), noon (Mon–Thu), 6:50 pm (Mon–Thu) and Saturday at 11:00 am. Two restrooms with showers, so you can train before or after work.' },
   ] satisfies { q: string; a: Rich }[],
 }

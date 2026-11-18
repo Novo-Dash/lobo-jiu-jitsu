@@ -80,7 +80,7 @@ export function Schedule() {
                       <td key={d} className={d === today ? 'today' : undefined}>
                         {CLASSES.filter((c) => c.start === t && c.days.includes(d)).map((c) => (
                           <button key={c.program} type="button" className={`cls${shown(c) ? '' : ' dim'}`} data-k={c.kind} tabIndex={shown(c) ? undefined : -1} aria-hidden={shown(c) ? undefined : true} onClick={() => book(c)}>
-                            <b>{c.program}</b><small>{c.sub}</small>
+                            <b>{c.program}<i className="gi">{c.gi}</i></b><small>{c.sub}</small>
                           </button>
                         ))}
                       </td>
@@ -103,7 +103,7 @@ export function Schedule() {
             <li key={c.program + c.start}>
               <button type="button" data-k={c.kind} onClick={() => book(c)}>
                 <time>{fmtRow(c.start)}</time>
-                <span><b>{c.program}</b><small>{c.sub}</small></span>
+                <span><b>{c.program}<i className="gi">{c.gi}</i></b><small>{c.sub}</small></span>
                 <span className="go">{SCHEDULE.book}</span>
               </button>
             </li>

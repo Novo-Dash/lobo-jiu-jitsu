@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Nav } from './components/layout/Nav'
+import { PromoPopup } from './components/layout/PromoPopup'
 import { SkipLink } from './components/layout/SkipLink'
 import { PushpinTearFooter } from './components/footer/PushpinTearFooter'
 import { Adults } from './components/sections/Adults'
@@ -75,6 +76,7 @@ export default function App() {
         <Location />
       </main>
       <PushpinTearFooter />
+      <PromoPopup />
     </>
   )
 }

@@ -19,14 +19,18 @@ const UPLOADS = [
   // Black November (12/11): the gi and the rash guard keyed out of the yellow panel of Lobo's campaign
   // art (black-november-art.webp), shown ≤ 420 CSS px wide behind the member card
   { file: 'bn-uniform.png', name: 'bn_uniform', w: 515, sm: 360, q: 86 },
+  // Black November pop-up (18/11): the whole campaign art, ≤ 460 CSS px wide in the dialog
+  { file: 'black-november-art.webp', name: 'bn_art', w: 920, sm: 640, q: 82 },
+  // Juniors card (18/11): the class group photo with Fred, cut to the card's 3:4 around the group
+  { file: 'juniors-group.webp', name: 'juniors', w: 640, sm: 400, crop: { left: 600, top: 0, width: 1440, height: 1920 } },
 ]
 
 const sizes = {}
 for (const u of UPLOADS) {
-  const img = sharp(path.join(src, u.file)), meta = await img.metadata()
-  const w = Math.min(u.w, meta.width)
-  const info = await sharp(path.join(src, u.file)).resize({ width: w }).webp({ quality: u.q ?? 80, alphaQuality: 85, effort: 6 }).toFile(path.join(out, `${u.name}.webp`))
-  await sharp(path.join(src, u.file)).resize({ width: u.sm }).webp({ quality: 78, alphaQuality: 80, effort: 6 }).toFile(path.join(out, `${u.name}-sm.webp`))
+  const load = () => (u.crop ? sharp(path.join(src, u.file)).extract(u.crop) : sharp(path.join(src, u.file)))
+  const w = Math.min(u.w, u.crop?.width ?? (await sharp(path.join(src, u.file)).metadata()).width)
+  const info = await load().resize({ width: w }).webp({ quality: u.q ?? 80, alphaQuality: 85, effort: 6 }).toFile(path.join(out, `${u.name}.webp`))
+  await load().resize({ width: u.sm }).webp({ quality: 78, alphaQuality: 80, effort: 6 }).toFile(path.join(out, `${u.name}-sm.webp`))
   sizes[u.name] = { w: info.width, h: info.height, sm: u.sm }
   const kb = (f) => (fs.statSync(path.join(out, f)).size / 1024).toFixed(0)
   console.log(`uploads: ${u.name} ${info.width}×${info.height} ${kb(`${u.name}.webp`)} KB · sm ${kb(`${u.name}-sm.webp`)} KB`)

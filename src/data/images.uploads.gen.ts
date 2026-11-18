@@ -19,5 +19,15 @@ export const UPLOADS = {
     "w": 515,
     "h": 290,
     "sm": 360
+  },
+  "bn_art": {
+    "w": 920,
+    "h": 1150,
+    "sm": 640
+  },
+  "juniors": {
+    "w": 640,
+    "h": 853,
+    "sm": 400
   }
 } as const

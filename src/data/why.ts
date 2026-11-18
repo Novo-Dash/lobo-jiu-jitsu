@@ -6,7 +6,7 @@ export const WHY = {
   panels: [
     {
       n: '01', label: 'The professor himself', title: 'You learn from the professor himself.',
-      body: 'A 3rd-degree black belt with 20 years in the sport, who owns the school and teaches the classes, not a name on the door.',
+      body: 'A 3rd-degree black belt with 25 years in the sport, who owns the school and teaches the classes, not a name on the door.',
       photo: img('why_prof', 'Professor Fred watching his students drill'),
     },
     {

@@ -65,6 +65,6 @@ export function jsonLd() {
 /** llms.txt: the school in plain text for AI search. */
 export function llms() {
   const a = SITE.address
-  const week = CLASSES.map((c) => `- ${c.program}: ${c.days.join(', ')} at ${fmtShort(c.start)}${c.end ? `–${fmtShort(c.end)}` : ''}`).join('\n')
+  const week = CLASSES.map((c) => `- ${c.program} (${c.gi}, ${c.sub.split(',')[0]}): ${c.days.join(', ')} at ${fmtShort(c.start)}${c.end ? `–${fmtShort(c.end)}` : ''}`).join('\n')
   return `# ${SITE.name}\n\n> ${SEO.description}\n\n- Address: ${a.street}, ${a.city}, ${a.state} ${a.zip}\n- Phone: ${SITE.phone.display}\n- Email: ${SITE.email}\n- Head professor: Fred Lobo, 3rd-degree black belt from Belo Horizonte, Brazil. Opened in October 2023.\n- First class: free trial class.\n\n## Weekly schedule (Aurora time)\n${week}\n\n## Plans\n${PRICING.plans.map((p) => `- ${p.name}: ${p.price}${p.perLong}`).join('\n')}\n\n## FAQ\n${FAQ.items.map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}\n`
 }

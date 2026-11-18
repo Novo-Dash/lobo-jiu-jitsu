@@ -15,6 +15,9 @@ export const PROMO = {
     link: 'See plans',
   },
   gear: img('bn_uniform', 'The Lobo Jiu-Jitsu gi and rash guard'),
+  // the pop-up (Jonathan, 18/11): Lobo's campaign art as it was posted, text included
+  art: img('bn_art', 'Black November at Lobo Jiu-Jitsu: sign up in November and get a free complete uniform, including a rash guard. Start your jiu-jitsu journey with the right gear and be part of the Lobo family.'),
+  popup: { label: 'Black November: a free uniform when you enroll in November', close: 'Close' },
   note: ['The full uniform,', 'free in November.'],
   line: 'Enroll by November 30 and the gi and the rash guard are on us.',
   // [CONFIRMAR com o cliente: vale para todos os planos de mensalidade, inclusive kids? Private lessons fica fora]
