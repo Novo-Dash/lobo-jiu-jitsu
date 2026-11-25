@@ -15,16 +15,6 @@ export const UPLOADS = {
     "h": 1402,
     "sm": 440
   },
-  "bn_uniform": {
-    "w": 515,
-    "h": 290,
-    "sm": 360
-  },
-  "bn_art": {
-    "w": 920,
-    "h": 1150,
-    "sm": 640
-  },
   "juniors": {
     "w": 640,
     "h": 853,

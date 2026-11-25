@@ -8,7 +8,7 @@ export const PRICING = {
   plans: [
     { name: 'Kids Unlimited', note: 'Little Lobos, Kids, Juniors', price: '$159', per: '/mo', perLong: '/month' },
     { name: 'Adult Unlimited', note: 'Every adult class', price: '$159', per: '/mo', perLong: '/month' },
-    { name: 'Second adult', note: 'Same family', price: '$99.99', per: '/mo', perLong: '/month' },
+    { name: 'Second member', note: 'Same family', price: '$99.99', per: '/mo', perLong: '/month' },
     { name: 'Private lessons', note: 'By appointment', price: '$125', per: '/hr', perLong: '/hour' },
   ],
   // [CONFIRMAR taxa de matrícula, uniforme, desconto à vista, contrato/cancelamento]
